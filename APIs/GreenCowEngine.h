@@ -47,7 +47,7 @@ I& operator= (const I&) = delete; \
 I& operator= (I&&) = delete; \
 
 
-namespace GreenCow
+namespace Engine
 {
 	struct Vertex
 	{
@@ -234,3 +234,5 @@ namespace GreenCow
 		virtual void Draw() = 0;
 	};
 }
+
+using namespace Engine;

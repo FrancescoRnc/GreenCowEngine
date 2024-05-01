@@ -1,11 +1,11 @@
-#include "OpenGL4Pipeline.h"
+#include "Pipeline.h"
 
-void GreenCow::OpenGL4Pipeline::CreateProgram(std::string shaders_name)
+void OpenGL::Pipeline::CreateProgram(std::string shaders_name)
 {
 	auto fullVSpath = "Assets/Shaders/v_" + shaders_name + ".glsl";
 	auto fullFSpath = "Assets/Shaders/f_" + shaders_name + ".glsl";
 
-	auto VScontent = FileReader::GetFileSource(fullVSpath);
+	auto VScontent = Helpers::FileReader::GetFileSource(fullVSpath);
 	GLint vssize = static_cast<GLint>(VScontent.size);
 	auto vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 	std::string vssource = reinterpret_cast<char*>(VScontent.source->data());
@@ -28,7 +28,7 @@ void GreenCow::OpenGL4Pipeline::CreateProgram(std::string shaders_name)
 	}
 
 
-	auto FScontent = FileReader::GetFileSource(fullFSpath);
+	auto FScontent = Helpers::FileReader::GetFileSource(fullFSpath);
 	GLint fssize = static_cast<GLint>(FScontent.size);
 	auto fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	std::string fssource = reinterpret_cast<char*>(FScontent.source->data());
@@ -78,7 +78,7 @@ void GreenCow::OpenGL4Pipeline::CreateProgram(std::string shaders_name)
 	glDeleteShader(fragment_shader);
 }
 
-void GreenCow::OpenGL4Pipeline::Draw()
+void OpenGL::Pipeline::Draw()
 {
 
 }

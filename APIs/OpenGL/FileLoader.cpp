@@ -1,7 +1,7 @@
-#include "OpenGL4FileLoader.h"
+#include "FileLoader.h"
 #include <stdexcept>
 
-bool GreenCow::OpenGL4FileLoader::LoadModel(std::string filepath,
+bool OpenGL::FileLoader::LoadModel(std::string filepath,
 	std::vector<Vertex>& out_vertices,
 	std::vector<GLint>& out_indices)
 {
@@ -93,7 +93,7 @@ bool GreenCow::OpenGL4FileLoader::LoadModel(std::string filepath,
 	return true;
 }
 
-GLuint GreenCow::OpenGL4FileLoader::LoadTexture(std::string filepath)
+GLuint OpenGL::FileLoader::LoadTexture(std::string filepath)
 {
 	GLuint texId;
 

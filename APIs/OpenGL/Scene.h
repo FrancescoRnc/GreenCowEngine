@@ -1,11 +1,11 @@
 #pragma once
 #include "../GreenCowEngine.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	class OpenGL4Camera;
-	class OpenGL4Mesh;
-	class OpenGL4Scene : public IScene
+	class Camera;
+	class Mesh;
+	class Scene : public Engine::IScene
 	{
 		public:
 
@@ -14,7 +14,7 @@ namespace GreenCow
 		void Update(const float deltaTime);
 		void Draw();
 
-		OpenGL4Camera* refCamera;
-		std::vector<OpenGL4Mesh*> Meshes;
+		Camera* refCamera;
+		std::vector<Mesh*> Meshes;
 	};
 }

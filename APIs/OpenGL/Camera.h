@@ -1,9 +1,9 @@
 #pragma once
 #include "../GreenCowEngine.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	class OpenGL4Camera : public ICamera
+	class Camera : public Engine::ICamera
 	{
 		public:
 
@@ -23,7 +23,7 @@ namespace GreenCow
 		const glm::vec3 GetDirection() const { return glm::vec3(0.f); }
 		const glm::quat GetRotation() const { return glm::quat(1.f, 0.f, 0.f, 0.f); }
 
-		Transform transform;
+		Engine::Transform transform;
 		glm::vec3 Target = { 0.0f, 0.0f, 1.0f };
 
 		private:

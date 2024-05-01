@@ -1,13 +1,13 @@
 #pragma once
 #include "../GreenCowEngine.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	class OpenGL4Window : public IWindow
+	class Window : public Engine::IWindow
 	{
 		public:
 
-		~OpenGL4Window();
+		~Window();
 
 		// Inherited via IWindow
 		const uint32_t GetWidth() const override { return width; };

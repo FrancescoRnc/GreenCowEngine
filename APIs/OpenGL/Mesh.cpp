@@ -1,6 +1,6 @@
-#include "OpenGL4Mesh.h"
+#include "Mesh.h"
 
-void GreenCow::OpenGL4Mesh::Setup(std::vector<Vertex> vertices, std::vector<GLint> indices)
+void OpenGL::Mesh::Setup(std::vector<Vertex> vertices, std::vector<GLint> indices)
 {
 	Vertices = vertices;
 	Indices = indices;
@@ -32,7 +32,7 @@ void GreenCow::OpenGL4Mesh::Setup(std::vector<Vertex> vertices, std::vector<GLin
 	glBindVertexArray(0);
 }
 
-void GreenCow::OpenGL4Mesh::Draw(GLuint program)
+void OpenGL::Mesh::Draw(GLuint program)
 {
 	//ModelMatrix = glm::mat4(1.0f);
 	//glm::mat4 TranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -1.0f));
@@ -64,7 +64,7 @@ void GreenCow::OpenGL4Mesh::Draw(GLuint program)
 	glBindVertexArray(0);
 }
 
-//void GreenCow::OpenGL4Mesh::RegisterVertices(OpenGL4Pipeline* pipeline)
+//void OpenGL::Mesh::RegisterVertices(Pipeline* pipeline)
 //{
 //	pipeline->TotalVertices.insert(pipeline->TotalVertices.begin(), 
 //								   Vertices.begin(), Vertices.end());

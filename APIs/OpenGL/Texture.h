@@ -1,9 +1,9 @@
 #pragma once
 #include "../GreenCowEngine.h" 
 
-namespace GreenCow
+namespace OpenGL
 {
-	class OpenGL4Texture : public ITexture
+	class Texture : public Engine::ITexture
 	{
 		GLuint TextureID;
 

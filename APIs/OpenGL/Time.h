@@ -2,9 +2,9 @@
 
 #include "../GreenCowEngine.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	class OpenGL4Time : public ITime
+	class Time : public Engine::ITime
 	{
 		public:
 

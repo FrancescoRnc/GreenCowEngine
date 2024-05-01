@@ -1,9 +1,9 @@
 #pragma once
 #include "../GreenCowEngine.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	class OpenGL4Pipeline : public GPUPipeline
+	class Pipeline : public Engine::GPUPipeline
 	{
 		public:
 

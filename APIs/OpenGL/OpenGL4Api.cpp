@@ -1,31 +1,32 @@
 #include "OpenGL4Api.h"
 #include <stb/stb_image.h>
 
-#include "OpenGL4Window.h"
-#include "OpenGL4Camera.h"
-#include "OpenGL4Mesh.h"
-#include "OpenGL4Pipeline.h"
-#include "OpenGL4FileLoader.h"
-#include "OpenGL4Scene.h"
+#include "Window.h"
+#include "Camera.h"
+#include "Mesh.h"
+#include "Pipeline.h"
+#include "FileLoader.h"
+#include "Scene.h"
 #include "../Helpers/FileReader.h"
 
 
-// API
-GreenCow::OpenGL4Api::OpenGL4Api()
-{
-	window = new OpenGL4Window();
-	pipeline = new OpenGL4Pipeline();
-	InputPressMatcher =
-		new FunctionMatcher<int>(0, []() { /*std::cout << "Press nothing." << std::endl;*/ });
-	InputReleaseMatcher =
-		new FunctionMatcher<int>(0, []() { /*std::cout << "Release nothing." << std::endl;*/ });
 
-	camera = new OpenGL4Camera();
-	//mesh = new OpenGL4Mesh(camera);
-	scene = new OpenGL4Scene();
+// API
+OpenGL::OpenGL4Api::OpenGL4Api()
+{
+	window = new Window();
+	pipeline = new Pipeline();
+	InputPressMatcher =
+		new Engine::FunctionMatcher<int>(0, []() { /*std::cout << "Press nothing." << std::endl;*/ });
+	InputReleaseMatcher =
+		new Engine::FunctionMatcher<int>(0, []() { /*std::cout << "Release nothing." << std::endl;*/ });
+
+	camera = new Camera();
+	//mesh = new Mesh(camera);
+	scene = new Scene();
 }
 
-void GreenCow::OpenGL4Api::CallKeyFunc(int action, int key)
+void OpenGL::OpenGL4Api::CallKeyFunc(int action, int key)
 {
 	if (action == GLFW_PRESS) InputPressMatcher->Call(key);
 	else if (action == GLFW_RELEASE) InputReleaseMatcher->Call(key);
@@ -34,16 +35,16 @@ void GreenCow::OpenGL4Api::CallKeyFunc(int action, int key)
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	//std::cout << action << " " << key << std::endl;
-	auto self = reinterpret_cast<GreenCow::OpenGL4Api*>(glfwGetWindowUserPointer(window));
+	auto self = reinterpret_cast<OpenGL::OpenGL4Api*>(glfwGetWindowUserPointer(window));
 	self->CallKeyFunc(action, key);
 }
 void window_close_callback(GLFWwindow* window)
 {
-	auto self = reinterpret_cast<GreenCow::OpenGL4Api*>(glfwGetWindowUserPointer(window));
+	auto self = reinterpret_cast<OpenGL::OpenGL4Api*>(glfwGetWindowUserPointer(window));
 	self->window->Close();
 }
 
-void GreenCow::OpenGL4Api::Initialize()
+void OpenGL::OpenGL4Api::Initialize()
 {
 	std::cout << "OpenGL: ";
 	std::cout << "Initialization" << std::endl;
@@ -67,7 +68,7 @@ void GreenCow::OpenGL4Api::Initialize()
 	SetupInputBinding();
 }
 
-void GreenCow::OpenGL4Api::LoadFiles()
+void OpenGL::OpenGL4Api::LoadFiles()
 {
 	std::cout << "OpenGL: ";
 	std::cout << "Loading Files..." << std::endl;
@@ -78,8 +79,8 @@ void GreenCow::OpenGL4Api::LoadFiles()
 		pipeline->CreateProgram("Mesh");
 		//std::cout << content.source << std::endl;
 
-		OpenGL4FileLoader loader;
-		std::vector<Vertex> vertices;
+		FileLoader loader;
+		std::vector<Engine::Vertex> vertices;
 		std::vector<GLint> indices;
 
 		if (!loader.LoadModel("Assets/Models/model_cow.obj", vertices, indices)) {
@@ -98,17 +99,17 @@ void GreenCow::OpenGL4Api::LoadFiles()
 	}
 }
 
-bool GreenCow::OpenGL4Api::IsWindowOpen()
+bool OpenGL::OpenGL4Api::IsWindowOpen()
 {
 	return window->IsOpen;
 }
 
-void GreenCow::OpenGL4Api::DequeueEvents()
+void OpenGL::OpenGL4Api::DequeueEvents()
 {
 	glfwPollEvents();
 }
 
-void GreenCow::OpenGL4Api::Update()
+void OpenGL::OpenGL4Api::Update()
 {
 	//std::cout << "FPS: " << 1 / deltatime << std::endl;
 	const float deltatime = time.GetDelta();
@@ -122,23 +123,23 @@ void GreenCow::OpenGL4Api::Update()
 	//mesh->transform.AddTranslation(glm::vec3(0.0f, 0.0f, 1.0f) * movespd * deltatime);
 }
 
-void GreenCow::OpenGL4Api::Clear()
+void OpenGL::OpenGL4Api::Clear()
 {
 	window->Clear();
 }
 
-void GreenCow::OpenGL4Api::Draw()
+void OpenGL::OpenGL4Api::Draw()
 {
 	//mesh->Draw(pipeline->Program);
 	scene->Draw();
 }
 
-void GreenCow::OpenGL4Api::Present()
+void OpenGL::OpenGL4Api::Present()
 {
 	window->Present();
 }
 
-void GreenCow::OpenGL4Api::Exit()
+void OpenGL::OpenGL4Api::Exit()
 {
 	std::cout << "OpenGL: ";
 	std::cout << "Exiting Program..." << std::endl;
@@ -148,7 +149,7 @@ void GreenCow::OpenGL4Api::Exit()
 
 }
 
-void GreenCow::OpenGL4Api::SetupInputBinding()
+void OpenGL::OpenGL4Api::SetupInputBinding()
 {
 	glfwSetKeyCallback(window->GetWindowData(), (GLFWkeyfun)key_callback);
 	glfwSetWindowCloseCallback(window->GetWindowData(),

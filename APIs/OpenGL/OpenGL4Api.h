@@ -1,16 +1,16 @@
 #pragma once
 #include "../GreenCowEngine.h"
 #include "../IGPUApi.h"
-#include "OpenGL4Time.h"
+#include "Time.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	//class OpenGL4Window;
-	//class OpenGL4Camera;
-	//class OpenGL4Mesh;
-	//class OpenGL4Pipeline;
-	//class OpenGL4Time;
-	class OpenGL4Api : public IGPUApi
+	//class Window;
+	//class Camera;
+	//class Mesh;
+	//class Pipeline;
+	//class Time;
+	class OpenGL4Api : public Engine::IGPUApi
 	{
 		public:
 
@@ -34,19 +34,19 @@ namespace GreenCow
 		void CallKeyFunc(int action, int key);
 
 
-		class OpenGL4Window* window;
-		class OpenGL4Camera* camera;
-		class OpenGL4Pipeline* pipeline;
-		class OpenGL4Scene* scene;
-		//class OpenGL4Mesh* mesh;
-		OpenGL4Time time;
+		class Window* window;
+		class Camera* camera;
+		class Pipeline* pipeline;
+		class Scene* scene;
+		//class Mesh* mesh;
+		Time time;
 
 		private:
 
 		void SetupInputBinding();
 
-		FunctionMatcher<int>* InputPressMatcher;
-		FunctionMatcher<int>* InputReleaseMatcher;
+		Engine::FunctionMatcher<int>* InputPressMatcher;
+		Engine::FunctionMatcher<int>* InputReleaseMatcher;
 		float angspd = 0;
 		float movespd = 0;
 	};

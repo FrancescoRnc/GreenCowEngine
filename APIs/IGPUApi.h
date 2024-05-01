@@ -1,7 +1,7 @@
 #pragma once
 #include "GreenCowEngine.h"
 
-namespace GreenCow
+namespace Engine
 {
 	class IGPUApi
 	{

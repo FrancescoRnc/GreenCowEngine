@@ -1,14 +1,14 @@
-#include "OpenGL4Scene.h"
+#include "Scene.h"
 
-void GreenCow::OpenGL4Scene::Load(const char* scene_filename)
+void OpenGL::Scene::Load(const char* scene_filename)
 {
 	if (!scene_filename || sizeof(scene_filename) == 0)
 		return;
 	try
 	{
 		glm::vec3 vtemp;
-		OpenGL4Mesh* mtemp;
-		OpenGL4Camera* ctemp;
+		Mesh* mtemp;
+		Camera* ctemp;
 		std::unordered_map<std::string, std::function<void()>> typeMatcher = {
 			{"Camera", [&]() {}},
 			{"Mesh", [&]() {}}
@@ -46,18 +46,18 @@ void GreenCow::OpenGL4Scene::Load(const char* scene_filename)
 	}
 }
 
-void GreenCow::OpenGL4Scene::Unload()
+void OpenGL::Scene::Unload()
 {
 	Meshes.clear();
 	delete refCamera;
 }
 
-void GreenCow::OpenGL4Scene::Update(const float deltaTime)
+void OpenGL::Scene::Update(const float deltaTime)
 {
 
 }
 
-void GreenCow::OpenGL4Scene::Draw()
+void OpenGL::Scene::Draw()
 {
 
 }

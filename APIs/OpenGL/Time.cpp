@@ -1,6 +1,6 @@
-#include "OpenGL4Time.h"
+#include "Time.h"
 
-const float GreenCow::OpenGL4Time::GetDelta()
+const float OpenGL::Time::GetDelta()
 {
 	now = glfwGetTime();
 	float delta = now - last;

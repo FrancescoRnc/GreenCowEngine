@@ -1,13 +1,13 @@
 #pragma once
-//#include "OpenGL4Api.h"
+//#include "Api.h"
 #include "../GreenCowEngine.h"
 
-namespace GreenCow
+namespace OpenGL
 {
-	struct OpenGL4FileLoader
+	struct FileLoader
 	{
 		bool LoadModel(std::string filepath,
-					   std::vector<Vertex>& out_vertices,
+					   std::vector<Engine::Vertex>& out_vertices,
 					   std::vector<GLint>& out_indices);
 
 		GLuint LoadTexture(std::string filepath);

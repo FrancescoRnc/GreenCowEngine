@@ -1,6 +1,6 @@
-#include "OpenGL4Camera.h"
+#include "Camera.h"
 
-void GreenCow::OpenGL4Camera::Setup(const GLfloat _FOV, const GLfloat _width,
+void OpenGL::Camera::Setup(const GLfloat _FOV, const GLfloat _width,
 	const GLfloat _height,
 	const GLfloat _znear, const GLfloat _zfar)
 {
@@ -17,18 +17,18 @@ void GreenCow::OpenGL4Camera::Setup(const GLfloat _FOV, const GLfloat _width,
 	transform.modelMatrix = viewMatrix * projectionMatrix;
 }
 
-void GreenCow::OpenGL4Camera::LookAt(const glm::vec3 target)
+void OpenGL::Camera::LookAt(const glm::vec3 target)
 {
 
 }
 
-void GreenCow::OpenGL4Camera::Orbit(const glm::vec3 target, const float distance, const float deltaRad)
+void OpenGL::Camera::Orbit(const glm::vec3 target, const float distance, const float deltaRad)
 {
 	glm::vec3 dist = glm::normalize(transform.Position - target) * distance;
 	glm::quat orbit = glm::quat(transform.rotationMatrix);
 	//transform.AddRotation() 
 }
-void GreenCow::OpenGL4Camera::Update()
+void OpenGL::Camera::Update()
 {
 	viewMatrix = projectionMatrix = glm::mat4(1.0f);
 
