@@ -84,6 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,6 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,11 +139,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="APIs\Helpers\FileReader.cpp" />
+    <ClCompile Include="APIs\IGPUApi.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Api.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Camera.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4FileLoader.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Mesh.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Pipeline.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Scene.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Texture.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Time.cpp" />
+    <ClCompile Include="APIs\OpenGL\OpenGL4Window.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stb.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="APIs\GreenCowEngine.h" />
+    <ClInclude Include="APIs\Helpers\FileReader.h" />
+    <ClInclude Include="APIs\IGPUApi.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Api.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Camera.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4FileLoader.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Mesh.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Pipeline.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Scene.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Texture.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Time.h" />
+    <ClInclude Include="APIs\OpenGL\OpenGL4Window.h" />
     <ClInclude Include="Libraries\include\glad\glad.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3native.h" />
