@@ -1,5 +1,7 @@
 #pragma once
 #include "../GreenCowEngine.h"
+#include "Pipeline.h"
+#include "GameObject.h"
 
 namespace OpenGL
 {
@@ -9,12 +11,19 @@ namespace OpenGL
 	{
 		public:
 
+		Scene(Pipeline* pipeline) : refPipeline(pipeline)
+		{
+			ActiveCamera = new Camera();
+		}
+
 		void Load(const char* scene_filename);
 		void Unload();
+		void Init();
 		void Update(const float deltaTime);
 		void Draw();
 
-		Camera* refCamera;
-		std::vector<Mesh*> Meshes;
+		Camera* ActiveCamera;
+		Pipeline* refPipeline;
+		std::vector<GameObject*> GameObjects{};
 	};
 }

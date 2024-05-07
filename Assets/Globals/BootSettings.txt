@@ -1,0 +1,3 @@
+wsize(800,600);
+bgcol(0.1,0.1,0.3);
+scene(scene001.scene);

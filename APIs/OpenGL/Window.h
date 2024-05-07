@@ -13,6 +13,7 @@ namespace OpenGL
 		const uint32_t GetWidth() const override { return width; };
 		const uint32_t GetHeight() const override { return height; };
 		void Create(const char* title, const int width, const int height) override;
+		void Show() override;
 		void Clear() override;
 		void Present() override;
 		bool Close() override;

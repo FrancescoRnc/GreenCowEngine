@@ -33,28 +33,43 @@
     <ClCompile Include="APIs\IGPUApi.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Camera.cpp">
+    <ClCompile Include="APIs\OpenGL\Camera.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4FileLoader.cpp">
+    <ClCompile Include="APIs\OpenGL\FileLoader.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Mesh.cpp">
+    <ClCompile Include="APIs\OpenGL\Mesh.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Pipeline.cpp">
+    <ClCompile Include="APIs\OpenGL\Pipeline.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Scene.cpp">
+    <ClCompile Include="APIs\OpenGL\Scene.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Texture.cpp">
+    <ClCompile Include="APIs\OpenGL\Texture.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Time.cpp">
+    <ClCompile Include="APIs\OpenGL\Time.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\OpenGL4Window.cpp">
+    <ClCompile Include="APIs\OpenGL\Window.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\OpenGL\GameObject.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\OpenGL\Material.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\OpenGL\Shader.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\Helpers\SerializedDataRetriever.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\Helpers\FileWriter.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,38 +92,77 @@
     <ClInclude Include="APIs\OpenGL\OpenGL4Api.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Camera.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4FileLoader.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Mesh.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Pipeline.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Scene.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Texture.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Time.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="APIs\OpenGL\OpenGL4Window.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="APIs\GreenCowEngine.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="APIs\IGPUApi.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Camera.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\FileLoader.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Mesh.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Pipeline.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Scene.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Texture.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Time.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Window.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\include\json\json.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\GameObject.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Material.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Shader.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Helpers\SerializedDataRetriever.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Helpers\FileWriter.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\lib\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Scenes\Scene001.scene" />
+    <None Include="Assets\Shaders\Mesh.frag" />
+    <None Include="Assets\Shaders\Mesh.vert" />
+    <None Include="Assets\Shaders\Textured.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Textures\cow_texture.jpg">
+      <Filter>File di risorse</Filter>
+    </Image>
+    <Image Include="Assets\Textures\ground.jpg">
+      <Filter>File di risorse</Filter>
+    </Image>
+    <Image Include="Assets\Textures\difuso_flip_oscuro.jpg">
+      <Filter>File di risorse</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\Globals\BootSettings.txt" />
+    <Text Include="Assets\Globals\Serialized\ShaderPrograms.csv" />
   </ItemGroup>
 </Project>

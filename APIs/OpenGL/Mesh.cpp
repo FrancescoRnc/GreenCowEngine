@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-void OpenGL::Mesh::Setup(std::vector<Vertex> vertices, std::vector<GLint> indices)
+void OpenGL::Mesh::Setup(std::vector<Vertex> vertices, std::vector<int> indices)
 {
 	Vertices = vertices;
 	Indices = indices;
@@ -32,7 +32,7 @@ void OpenGL::Mesh::Setup(std::vector<Vertex> vertices, std::vector<GLint> indice
 	glBindVertexArray(0);
 }
 
-void OpenGL::Mesh::Draw(GLuint program)
+void OpenGL::Mesh::Draw(uint32_t program)
 {
 	//ModelMatrix = glm::mat4(1.0f);
 	//glm::mat4 TranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -1.0f));
@@ -43,25 +43,30 @@ void OpenGL::Mesh::Draw(GLuint program)
 	//transform.Translate(glm::vec3(0.0f, 0.0f, -1.0f));
 	//transform.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), 3.14f / 4);
 	//transform.ReScale(glm::vec3(1.0f));
-	transform.modelMatrix = transform.translationMatrix *
-		transform.rotationMatrix *
-		transform.scaleMatrix;
+	transform.modelMatrix = transform.translationMatrix 
+							* transform.rotationMatrix 
+							* transform.scaleMatrix;
 
 	glUseProgram(program);
 
-	GLint viewLoc = glGetUniformLocation(program, "view");
-	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(refCamera->GetView()));
-	GLint projLoc = glGetUniformLocation(program, "projection");
-	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(refCamera->GetProjection()));
+	//GLint viewLoc = glGetUniformLocation(program, "view");
+	//glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(refCamera->GetView()));
+	//GLint projLoc = glGetUniformLocation(program, "projection");
+	//glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(refCamera->GetProjection()));
+	const glm::mat4 camMatrix = refCamera->GetProjection() * refCamera->GetView();
+	GLint camLoc = glGetUniformLocation(program, "camMatrix");
+	glUniformMatrix4fv(camLoc, 1, GL_FALSE, glm::value_ptr(camMatrix));
 	GLint modelLoc = glGetUniformLocation(program, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform.modelMatrix));
 
-	glBindTexture(GL_TEXTURE_2D, Texture);
+	//if (Texture)
+		glBindTexture(GL_TEXTURE_2D, Texture);
 
 	glBindVertexArray(VAO);
 	//glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
 	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(Vertices.size()));
 	glBindVertexArray(0);
+
 }
 
 //void OpenGL::Mesh::RegisterVertices(Pipeline* pipeline)

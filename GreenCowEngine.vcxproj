@@ -150,8 +150,13 @@
     <ClCompile Include="APIs\OpenGL\Texture.cpp" />
     <ClCompile Include="APIs\OpenGL\Time.cpp" />
     <ClCompile Include="APIs\OpenGL\Window.cpp" />
+    <ClCompile Include="APIs\OpenGL\GameObject.cpp" />
+    <ClCompile Include="APIs\Helpers\FileWriter.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="APIs\OpenGL\Material.cpp" />
+    <ClCompile Include="APIs\OpenGL\Shader.cpp" />
+    <ClCompile Include="APIs\Helpers\SerializedDataRetriever.cpp" />
     <ClCompile Include="stb.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,13 +172,34 @@
     <ClInclude Include="APIs\OpenGL\Texture.h" />
     <ClInclude Include="APIs\OpenGL\Time.h" />
     <ClInclude Include="APIs\OpenGL\Window.h" />
+    <ClInclude Include="APIs\OpenGL\GameObject.h" />
+    <ClInclude Include="APIs\Helpers\FileWriter.h" />
     <ClInclude Include="Libraries\include\glad\glad.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Libraries\include\json\json.h" />
     <ClInclude Include="Libraries\include\KHR\khrplatform.h" />
+    <ClInclude Include="APIs\OpenGL\Material.h" />
+    <ClInclude Include="APIs\OpenGL\Shader.h" />
+    <ClInclude Include="APIs\Helpers\SerializedDataRetriever.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\lib\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Scenes\Scene001.scene" />
+    <None Include="Assets\Shaders\Mesh.frag" />
+    <None Include="Assets\Shaders\Textured.frag" />
+    <None Include="Assets\Shaders\Mesh.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Textures\cow_texture.jpg" />
+    <Image Include="Assets\Textures\difuso_flip_oscuro.jpg" />
+    <Image Include="Assets\Textures\ground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\Globals\BootSettings.txt" />
+    <Text Include="Assets\Globals\Serialized\ShaderPrograms.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

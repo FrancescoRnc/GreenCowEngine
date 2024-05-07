@@ -20,6 +20,7 @@ namespace OpenGL
 		void Initialize() override;		
 		void LoadFiles() override;
 
+		void Start() override;
 		bool IsWindowOpen() override;
 		void DequeueEvents() override;
 		void Update() override;
@@ -35,9 +36,9 @@ namespace OpenGL
 
 
 		class Window* window;
-		class Camera* camera;
+		//class Camera* camera;
 		class Pipeline* pipeline;
-		class Scene* scene;
+		class Scene* activeScene;
 		//class Mesh* mesh;
 		Time time;
 

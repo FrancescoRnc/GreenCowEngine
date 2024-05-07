@@ -17,6 +17,7 @@ int main()
 
 	gpuapi->Initialize();
 	gpuapi->LoadFiles();
+	gpuapi->Start();
 
 	while (gpuapi->IsWindowOpen())
 	{

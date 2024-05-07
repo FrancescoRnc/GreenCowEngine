@@ -1,9 +1,11 @@
 #include "Pipeline.h"
 
-void OpenGL::Pipeline::CreateProgram(std::string shaders_name)
+void OpenGL::Pipeline::CreateProgram(std::string programName, std::vector<std::string> files, bool useAsDefault)
 {
-	auto fullVSpath = "Assets/Shaders/v_" + shaders_name + ".glsl";
-	auto fullFSpath = "Assets/Shaders/f_" + shaders_name + ".glsl";
+	//auto fullVSpath = "Assets/Shaders/v_" + shaders_name + ".glsl";
+	//auto fullFSpath = "Assets/Shaders/f_" + shaders_name + ".glsl";
+	auto fullVSpath = files[0];
+	auto fullFSpath = files[1];
 
 	auto VScontent = Helpers::FileReader::GetFileSource(fullVSpath);
 	GLint vssize = static_cast<GLint>(VScontent.size);
@@ -21,7 +23,7 @@ void OpenGL::Pipeline::CreateProgram(std::string shaders_name)
 		glGetShaderiv(vertex_shader, GL_INFO_LOG_LENGTH, &info_log_length);
 		std::vector<char> shader_log(info_log_length);
 		glGetShaderInfoLog(vertex_shader, info_log_length, NULL, &shader_log[0]);
-		std::cout << "Error compiling vertex shader: " << shaders_name << std::endl
+		std::cout << "Error compiling vertex shader from file: " << files[0] << std::endl
 			<< &shader_log[0] << std::endl;
 
 		return;
@@ -44,38 +46,41 @@ void OpenGL::Pipeline::CreateProgram(std::string shaders_name)
 		glGetShaderiv(fragment_shader, GL_INFO_LOG_LENGTH, &info_log_length);
 		std::vector<char> shader_log(info_log_length);
 		glGetShaderInfoLog(fragment_shader, info_log_length, NULL, &shader_log[0]);
-		std::cout << "Error compiling fragment shader: " << shaders_name << std::endl
+		std::cout << "Error compiling fragment shader from file: " << files[1] << std::endl
 			<< &shader_log[0] << std::endl;
 
 		return;
 	}
 
+	GLuint newProgram = glCreateProgram();
+	//Program = glCreateProgram();
 
-	Program = glCreateProgram();
-
-	glAttachShader(Program, vertex_shader);
-	glAttachShader(Program, fragment_shader);
-	glLinkProgram(Program);
+	glAttachShader(newProgram, vertex_shader);
+	glAttachShader(newProgram, fragment_shader);
+	glLinkProgram(newProgram);
 
 	int link_result = 0;
-	glGetProgramiv(Program, GL_LINK_STATUS, &link_result);
+	glGetProgramiv(newProgram, GL_LINK_STATUS, &link_result);
 	if (link_result == GL_FALSE)
 	{
 		int info_log_length = 0;
-		glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &info_log_length);
+		glGetProgramiv(newProgram, GL_INFO_LOG_LENGTH, &info_log_length);
 		std::vector<char> program_log(info_log_length);
-		glGetProgramInfoLog(Program, info_log_length, NULL,
+		glGetProgramInfoLog(newProgram, info_log_length, NULL,
 			&program_log[0]);
 		std::cout << "Shader Loader : LINK ERROR" << std::endl
 			<< &program_log[0] << std::endl;
 		return;
 	}
 
-	glDetachShader(Program, vertex_shader);
-	glDetachShader(Program, fragment_shader);
+	glDetachShader(newProgram, vertex_shader);
+	glDetachShader(newProgram, fragment_shader);
 
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
+
+	_registeredPrograms.insert({ programName, newProgram });
+	if (useAsDefault) _defaultProgram = newProgram;
 }
 
 void OpenGL::Pipeline::Draw()

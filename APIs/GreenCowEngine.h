@@ -1,11 +1,5 @@
 #pragma once
 
-#ifndef INCLUDE_CUSTOM
-#define INCLUDE_CUSTOM
-#include "Helpers/FileReader.h"
-#endif // !INCLUDE_CUSTOM
-
-
 #ifndef INCLUDE_STD
 #define INCLUDE_STD
 #include <stdint.h>
@@ -16,6 +10,7 @@
 #include <stack>
 #include <array>
 #include <functional>
+#include <memory>
 #endif // !INCLUDE_STD
 
 #ifndef INCLUDE_OPENGL
@@ -37,6 +32,13 @@
 #define INCLUDE_STB_IMAGE
 #include <stb/stb_image.h>
 #endif // !INCLUDE_STB_IMAGE
+
+#ifndef INCLUDE_CUSTOM
+#define INCLUDE_CUSTOM
+#include "Helpers/FileReader.h"
+#include "Helpers/FileWriter.h"
+#include "Helpers/SerializedDataRetriever.h"
+#endif // !INCLUDE_CUSTOM
 
 
 
@@ -60,16 +62,16 @@ namespace Engine
 	{
 		public:
 
-		virtual void Setup(std::vector<Vertex> vertices, std::vector<GLint> indices) = 0;
+		virtual void Setup(std::vector<Vertex> vertices, std::vector<int> indices) = 0;
 
-		virtual void Draw(GLuint program) = 0;
+		virtual void Draw(uint32_t program) = 0;
 	};
 
 	class GPUPipeline
 	{
 		public:
 
-		virtual void CreateProgram(std::string shaders_name) = 0;
+		virtual void CreateProgram(std::string programName, std::vector<std::string> files, bool useAsDefault) = 0;
 
 		virtual void Draw() = 0;
 	}; 
@@ -79,6 +81,14 @@ namespace Engine
 		public:
 
 		virtual void Setup() = 0;
+	};
+
+	template<typename T>
+	class ISerializable
+	{
+	public:
+		virtual void Serialize() = 0;
+		virtual T Deserialize() = 0;
 	};
 
 	template<typename Key, typename ... Params>
@@ -120,40 +130,42 @@ namespace Engine
 		public:
 
 		glm::vec3 Position, Rotation, Scale;
-		glm::vec3 Right, Up, Front;
+		glm::vec3 Right;
+		glm::vec3 Up;
+		glm::vec3 Front;
 		float Angle;
 
-		void Translate(glm::vec3 newPos)
+		void Translate(const glm::vec3 newPos)
 		{
 			Position = newPos;
-			translationMatrix = glm::translate(glm::mat4(1.0f), Position);
+			translationMatrix = glm::translate(glm::mat4(1.0f), newPos);
 		}
-		void AddTranslation(glm::vec3 delta)
+		void AddTranslation(const glm::vec3 delta)
 		{
 			Position += delta;
-			Translate(Position);
+			translationMatrix = glm::translate(glm::mat4(1.0f), Position);
 		}
 
-		void Rotate(glm::vec3 axis, float angleRad)
+		void Rotate(const glm::vec3 axis, const float angleRad)
 		{
 			Angle = angleRad;
 			rotationMatrix = glm::rotate(glm::mat4(1.0f), Angle, axis);
 		}
-		void AddRotation(glm::vec3 axis, float deltaAngleRad)
+		void AddRotation(const glm::vec3 axis, const float deltaAngleRad)
 		{
 			Angle += deltaAngleRad;
-			Rotate(axis, Angle);
+			rotationMatrix = glm::rotate(glm::mat4(1.0f), Angle, axis);
 		}
 
-		void ReScale(glm::vec3 newSc)
+		void ReScale(const glm::vec3 newSc)
 		{
 			Scale = newSc;
 			scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
 		}
-		void AddScale(glm::vec3 delta)
+		void AddScale(const glm::vec3 delta)
 		{
 			Scale += delta;
-			ReScale(Scale);
+			scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
 		}
 
 		//glm::vec3 Forward()
@@ -183,6 +195,7 @@ namespace Engine
 		virtual const uint32_t GetHeight() const = 0;
 
 		virtual void Create(const char* title, const int width, const int height) = 0;
+		virtual void Show() = 0;
 		virtual void Clear() = 0;
 		virtual void Present() = 0;
 		virtual bool Close() = 0;
@@ -202,7 +215,7 @@ namespace Engine
 	{
 		public:
 
-		virtual void Setup(GLfloat FOV, GLfloat width, GLfloat height, GLfloat znear, GLfloat zfar) = 0;
+		virtual void Setup(float FOV, float width, float height, float znear, float zfar) = 0;
 		//virtual const glm::mat4 GetView() const = 0;
 		//virtual const glm::mat4 GetProjection() const = 0;
 		//virtual const glm::vec3 GetPosition() const = 0;
@@ -230,6 +243,7 @@ namespace Engine
 
 		virtual void Load(const char* scene_filename) = 0;
 		virtual void Unload() = 0;
+		virtual void Init() = 0;
 		virtual void Update(const float deltaTime) = 0;
 		virtual void Draw() = 0;
 	};

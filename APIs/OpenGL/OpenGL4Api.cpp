@@ -21,9 +21,9 @@ OpenGL::OpenGL4Api::OpenGL4Api()
 	InputReleaseMatcher =
 		new Engine::FunctionMatcher<int>(0, []() { /*std::cout << "Release nothing." << std::endl;*/ });
 
-	camera = new Camera();
+	//camera = new Camera();
 	//mesh = new Mesh(camera);
-	scene = new Scene();
+	activeScene = new Scene(pipeline);
 }
 
 void OpenGL::OpenGL4Api::CallKeyFunc(int action, int key)
@@ -55,15 +55,13 @@ void OpenGL::OpenGL4Api::Initialize()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	const int windowWidth = 800;
-	const int windowHeight = 600;
-	window->Create("GreenCow Engine", windowWidth, windowHeight);
-	camera->Setup(60, windowWidth, windowHeight, 0.01f, 1000.f);
-	camera->Target = { 0.0f, 0.0f, 1.0f };
-	scene->Load("");
+	//const int windowWidth = 800;
+	//const int windowHeight = 600;
+	
+	window->Create("GreenCow Engine", 800, 600);
+	glfwSetWindowUserPointer(window->GetWindowData(), this);
 
 	glEnable(GL_DEPTH_TEST);
-	glfwSetWindowUserPointer(window->GetWindowData(), this);
 
 	SetupInputBinding();
 }
@@ -73,30 +71,44 @@ void OpenGL::OpenGL4Api::LoadFiles()
 	std::cout << "OpenGL: ";
 	std::cout << "Loading Files..." << std::endl;
 
-
 	try
 	{
-		pipeline->CreateProgram("Mesh");
-		//std::cout << content.source << std::endl;
+		pipeline->CreateProgram("default", {
+			"Assets/Shaders/Mesh.vert",
+			"Assets/Shaders/Mesh.frag"
+		});
+		pipeline->CreateProgram("textured", {
+			"Assets/Shaders/Mesh.vert",
+			"Assets/Shaders/Textured.frag"
+		}, true);
 
+		pipeline->SerializePrograms();
+
+		/*std::cout << content.source << std::endl;
 		FileLoader loader;
-		std::vector<Engine::Vertex> vertices;
+		std::vector<Vertex> vertices;
 		std::vector<GLint> indices;
 
-		if (!loader.LoadModel("Assets/Models/model_cow.obj", vertices, indices)) {
+		if (!loader.LoadModel(relativeAssetDirectory + "Models/model_cow.obj", vertices, indices)) {
 			return;
 		}
-
-		//mesh->Setup(vertices, indices);
-		//mesh->transform.Translate({ 0.0f, 0.0f, -4.0f });
-		////mesh->transform.Rotate({0.0f, 1.0f, 0.0f}, 3.14f / 4);
-		//mesh->transform.ReScale(glm::vec3(1.0f));
-		//mesh->Texture = loader.LoadTexture("Assets/Textures/ground.jpg");
+		mesh->Setup(vertices, indices);
+		mesh->transform.Translate({ 0.0f, 0.0f, -4.0f });
+		//mesh->transform.Rotate({0.0f, 1.0f, 0.0f}, 3.14f / 4);
+		mesh->transform.ReScale(glm::vec3(1.0f));
+		mesh->Texture = loader.LoadTexture("Assets/Textures/ground.jpg");*/
 	}
 	catch (const std::exception& ex) {
 		std::cout << "Error during files loading!!!" << std::endl;
 		return;
 	}
+}
+
+void OpenGL::OpenGL4Api::Start() 
+{
+	activeScene->Init();
+
+	window->Show();
 }
 
 bool OpenGL::OpenGL4Api::IsWindowOpen()
@@ -114,9 +126,9 @@ void OpenGL::OpenGL4Api::Update()
 	//std::cout << "FPS: " << 1 / deltatime << std::endl;
 	const float deltatime = time.GetDelta();
 
-	scene->Update(deltatime);
+	activeScene->Update(deltatime);
 
-	camera->Update();
+	//camera->Update();
 
 	//if (!mesh) return;
 	//mesh->transform.AddRotation({ 0.0f, 1.0f, 0.0f }, angspd * deltatime);
@@ -131,7 +143,7 @@ void OpenGL::OpenGL4Api::Clear()
 void OpenGL::OpenGL4Api::Draw()
 {
 	//mesh->Draw(pipeline->Program);
-	scene->Draw();
+	activeScene->Draw();
 }
 
 void OpenGL::OpenGL4Api::Present()
@@ -155,7 +167,7 @@ void OpenGL::OpenGL4Api::SetupInputBinding()
 	glfwSetWindowCloseCallback(window->GetWindowData(),
 		(GLFWwindowclosefun)window_close_callback);
 	//InputPressMatcher->Add(GLFW_KEY_ESCAPE, [this]() { window->Close(); });
-	InputPressMatcher->Add(GLFW_KEY_W, [this]() { movespd = 10.f; });
+	InputPressMatcher->Add(GLFW_KEY_W, [this]() { movespd = 10.f;  });
 	InputPressMatcher->Add(GLFW_KEY_S, [this]() { movespd = -10.f; });
 	InputPressMatcher->Add(GLFW_KEY_D, [this]() { angspd = 5.f; });
 	InputPressMatcher->Add(GLFW_KEY_A, [this]() { angspd = -5.f; });

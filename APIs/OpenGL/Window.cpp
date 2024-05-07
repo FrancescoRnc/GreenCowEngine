@@ -4,10 +4,16 @@ void OpenGL::Window::Create(const char* title, const int width, const int height
 {
 	std::cout << "OpenGL: Creating Window..." << std::endl;
 	internal_window = glfwCreateWindow(width, height, title, NULL, NULL);
+	glfwHideWindow(internal_window);
 	glfwMakeContextCurrent(internal_window);
 	gladLoadGL();
 	glViewport(0, 0, width, height);
-	clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+	clearColor = { 0.1f, 0.1f, 0.3f, 1.0f };
+}
+
+void OpenGL::Window::Show()
+{
+	glfwShowWindow(internal_window);
 }
 
 void OpenGL::Window::Clear()

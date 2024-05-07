@@ -15,7 +15,9 @@ namespace Engine
 		virtual bool IsWindowOpen() = 0;
 		virtual void DequeueEvents() = 0;
 
-		// Here's the function to update Physics, Input controlls etc. if needed
+		virtual void Start() = 0;
+
+		// This function updates Physics, Input controlls etc. if needed
 		virtual void Update() = 0;
 
 		// This clears the screen
@@ -27,7 +29,7 @@ namespace Engine
 		// Here you could use SwapChain and other techniques
 		virtual void Present() = 0;
 
-		// Once finished the game loop, Exit handles destruction and 
+		// Once finished the game loop, Exit handles objects destruction
 		virtual void Exit() = 0;
 
 

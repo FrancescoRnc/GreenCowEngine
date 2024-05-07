@@ -3,7 +3,7 @@
 
 namespace OpenGL
 {
-	class Texture : public Engine::ITexture
+	class Texture : public ITexture
 	{
 		GLuint TextureID;
 

@@ -11,7 +11,7 @@ namespace OpenGL
 
 		// Inherited via GPUMesh
 		void Setup(std::vector<Engine::Vertex> vertices, std::vector<GLint> indices) override;
-		void Draw(GLuint program) override;
+		void Draw(uint32_t program) override;
 		// - - - -
 
 		//void RegisterVertices(Pipeline* pipeline);

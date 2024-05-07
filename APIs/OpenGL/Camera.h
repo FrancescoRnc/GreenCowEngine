@@ -7,8 +7,8 @@ namespace OpenGL
 	{
 		public:
 
-		void Setup(const GLfloat FOV, const GLfloat width, const GLfloat height,
-				   const GLfloat znear, const GLfloat zfar) override;
+		void Setup(const float FOV, const float width, const float height,
+				   const float znear, const float zfar) override;
 
 		// Inherited via ICamera
 		void LookAt(const glm::vec3 target) override;
