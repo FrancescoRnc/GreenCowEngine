@@ -12,6 +12,6 @@ namespace OpenGL
 
 		private:
 
-		float last, now;
+		float last, now = 0.f;
 	};
 }

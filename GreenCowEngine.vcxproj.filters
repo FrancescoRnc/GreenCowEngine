@@ -72,6 +72,24 @@
     <ClCompile Include="APIs\Helpers\FileWriter.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="APIs\Transform.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\OpenGL\Renderer.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\Helpers\AssetWrapper.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\Helpers\AssetsLoader.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\OpenGL\AppController.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\GreenCowEngine.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\include\glad\glad.h">
@@ -122,9 +140,6 @@
     <ClInclude Include="APIs\OpenGL\Window.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\include\json\json.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="APIs\OpenGL\GameObject.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
@@ -138,6 +153,21 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="APIs\Helpers\FileWriter.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Transform.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\Renderer.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Helpers\AssetWrapper.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Helpers\AssetsLoader.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\OpenGL\AppController.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

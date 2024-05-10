@@ -2,7 +2,7 @@
 #include "../GreenCowEngine.h";
 #include "Material.h"
 #include "Mesh.h"
-#include "Pipeline.h"
+//#include "Pipeline.h"
 
 namespace OpenGL
 {
@@ -23,7 +23,7 @@ namespace OpenGL
 
 		Material* CurrentMaterial{};
 		Mesh* CurrentMesh{};
-		Transform* WorldTransform;
+		Transform WorldTransform;
 		
 
 		GameObject()
@@ -49,7 +49,7 @@ namespace OpenGL
 			_currentProgram = material->GetProgram();
 		}
 
-		void Update(const float deltaTime);
+		void Update(const float deltatime);
 		void Draw();
 		
 		void SetMaterial(Material* mat);

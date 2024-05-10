@@ -39,5 +39,5 @@ void OpenGL::Camera::Update()
 		znear, zfar);
 	//orthoMatrix = glm::ortho<GLfloat>(0, viewWidth, 0, viewHeight);
 
-	//transform.modelMatrix = viewMatrix * projectionMatrix;
+	transform.modelMatrix = viewMatrix * projectionMatrix;
 }

@@ -12,7 +12,7 @@ namespace OpenGL
 		Material(GLuint defaulProgram) : Program(defaulProgram)
 		{}
 
-		std::vector<Texture*> Textures;
+		std::vector<ITexture*> Textures;
 
 		inline GLuint GetProgram() const
 		{

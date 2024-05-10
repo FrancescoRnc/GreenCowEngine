@@ -43,9 +43,9 @@ void OpenGL::Mesh::Draw(uint32_t program)
 	//transform.Translate(glm::vec3(0.0f, 0.0f, -1.0f));
 	//transform.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), 3.14f / 4);
 	//transform.ReScale(glm::vec3(1.0f));
-	transform.modelMatrix = transform.translationMatrix 
-							* transform.rotationMatrix 
-							* transform.scaleMatrix;
+	//transform.modelMatrix = transform.translationMatrix 
+	//						* transform.rotationMatrix 
+	//						* transform.scaleMatrix;
 
 	glUseProgram(program);
 
@@ -57,7 +57,7 @@ void OpenGL::Mesh::Draw(uint32_t program)
 	GLint camLoc = glGetUniformLocation(program, "camMatrix");
 	glUniformMatrix4fv(camLoc, 1, GL_FALSE, glm::value_ptr(camMatrix));
 	GLint modelLoc = glGetUniformLocation(program, "model");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform.modelMatrix));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(ModelMatrix));
 
 	//if (Texture)
 		glBindTexture(GL_TEXTURE_2D, Texture);

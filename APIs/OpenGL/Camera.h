@@ -28,7 +28,7 @@ namespace OpenGL
 
 		private:
 
-		glm::mat4 viewMatrix, projectionMatrix, orthoMatrix;
+		glm::mat4 viewMatrix{glm::mat4(1.0f)}, projectionMatrix{ glm::mat4(1.0f) }, orthoMatrix{ glm::mat4(1.0f) };
 		
 		GLfloat FOV = 0.0f; 
 		GLfloat viewWidth = 0.0f;

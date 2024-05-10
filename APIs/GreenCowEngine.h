@@ -1,5 +1,11 @@
 #pragma once
 
+#define COPY_MOVE_DELETE(I) \
+I(const I&) = delete; \
+I(I&&) = delete; \
+I& operator= (const I&) = delete; \
+I& operator= (I&&) = delete; \
+
 #ifndef INCLUDE_STD
 #define INCLUDE_STD
 #include <stdint.h>
@@ -33,20 +39,19 @@
 #include <stb/stb_image.h>
 #endif // !INCLUDE_STB_IMAGE
 
-#ifndef INCLUDE_CUSTOM
-#define INCLUDE_CUSTOM
+#ifndef INCLUDE_ENGINE
+#define INCLUDE_ENGINE
+#include "Transform.h"
+#endif // !INCLUDE_ENGINE
+
+#ifndef INCLUDE_HELPERS
+#define INCLUDE_HELPERS
 #include "Helpers/FileReader.h"
 #include "Helpers/FileWriter.h"
 #include "Helpers/SerializedDataRetriever.h"
-#endif // !INCLUDE_CUSTOM
-
-
-
-#define COPY_MOVE_DELETE(I) \
-I(const I&) = delete; \
-I(I&&) = delete; \
-I& operator= (const I&) = delete; \
-I& operator= (I&&) = delete; \
+#include "Helpers/AssetWrapper.h"
+#include "Helpers/AssetsLoader.h"
+#endif // !INCLUDE_HELPERS
 
 
 namespace Engine
@@ -91,100 +96,17 @@ namespace Engine
 		virtual T Deserialize() = 0;
 	};
 
-	template<typename Key, typename ... Params>
-	class FunctionMatcher
+	class IUpdatable
 	{
-		public:
-		FunctionMatcher() = default;
-		FunctionMatcher(Key _worst_key, std::function<void(Params...)> _dummy_func)
-		{
-			Matcher = { { _worst_key, _dummy_func } };
-		}
-
-		// This adds a new function, with its own key, to be called
-		inline void Add(Key key, std::function<void(Params...)> function)
-		{
-			Matcher.insert({ key, function });
-		}
-
-		// This calls your function given a key
-		void Call(Key key) noexcept
-		{
-			auto found = Matcher.find(key);
-			Key k = found != Matcher.end() ? key : worst_key;
-			Matcher[k]();
-		}
-		// USE THIS ONLY IF YOUR KEY IS SAFE FROM EXCEPTIONS
-		void SimpleCall(Key key) noexcept
-		{
-			Matcher[key]();
-		}
-
-		private:
-		std::unordered_map<Key, std::function<void(Params...)>> Matcher;
-		Key worst_key;
+	public:
+		virtual void Update(const float deltaTime) = 0;
+	};
+	class IDrawable
+	{
+	public:
+		virtual void Draw() = 0;
 	};
 
-	class Transform
-	{
-		public:
-
-		glm::vec3 Position, Rotation, Scale;
-		glm::vec3 Right;
-		glm::vec3 Up;
-		glm::vec3 Front;
-		float Angle;
-
-		void Translate(const glm::vec3 newPos)
-		{
-			Position = newPos;
-			translationMatrix = glm::translate(glm::mat4(1.0f), newPos);
-		}
-		void AddTranslation(const glm::vec3 delta)
-		{
-			Position += delta;
-			translationMatrix = glm::translate(glm::mat4(1.0f), Position);
-		}
-
-		void Rotate(const glm::vec3 axis, const float angleRad)
-		{
-			Angle = angleRad;
-			rotationMatrix = glm::rotate(glm::mat4(1.0f), Angle, axis);
-		}
-		void AddRotation(const glm::vec3 axis, const float deltaAngleRad)
-		{
-			Angle += deltaAngleRad;
-			rotationMatrix = glm::rotate(glm::mat4(1.0f), Angle, axis);
-		}
-
-		void ReScale(const glm::vec3 newSc)
-		{
-			Scale = newSc;
-			scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
-		}
-		void AddScale(const glm::vec3 delta)
-		{
-			Scale += delta;
-			scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
-		}
-
-		//glm::vec3 Forward()
-		//{
-		//	return glm::cross()
-		//}
-
-		//private:
-		glm::mat4 modelMatrix;
-		glm::mat4 translationMatrix;
-		glm::mat4 rotationMatrix;
-		glm::mat4 scaleMatrix;
-
-		glm::mat4 forward;
-		glm::mat4 right;
-		glm::mat4 up;
-	};
-
-	// Interfaces
 	class IWindow
 	{
 		public:
@@ -247,6 +169,47 @@ namespace Engine
 		virtual void Update(const float deltaTime) = 0;
 		virtual void Draw() = 0;
 	};
+
+	class IAppController
+	{
+
+	};
+
+
+	template<typename Key, typename ... Params>
+	class FunctionMatcher
+	{
+	public:
+		FunctionMatcher() = default;
+		FunctionMatcher(Key _worst_key, std::function<void(Params...)> _dummy_func)
+		{
+			Matcher = { { _worst_key, _dummy_func } };
+		}
+
+		// This adds a new function, with its own key, to be called
+		inline void Add(Key key, std::function<void(Params...)> function)
+		{
+			Matcher.insert({ key, function });
+		}
+
+		// This calls your function given a key
+		void Call(Key key) noexcept
+		{
+			auto found = Matcher.find(key);
+			Key k = found != Matcher.end() ? key : worst_key;
+			Matcher[k]();
+		}
+		// USE THIS ONLY IF YOUR KEY IS SAFE FROM EXCEPTIONS
+		void SimpleCall(Key key) noexcept
+		{
+			Matcher[key]();
+		}
+
+	private:
+		std::unordered_map<Key, std::function<void(Params...)>> Matcher;
+		Key worst_key;
+	};
+
 }
 
 using namespace Engine;

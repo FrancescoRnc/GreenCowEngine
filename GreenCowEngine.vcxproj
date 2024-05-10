@@ -139,19 +139,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="APIs\GreenCowEngine.cpp" />
+    <ClCompile Include="APIs\Helpers\AssetsLoader.cpp" />
+    <ClCompile Include="APIs\Helpers\AssetWrapper.cpp" />
     <ClCompile Include="APIs\Helpers\FileReader.cpp" />
     <ClCompile Include="APIs\IGPUApi.cpp" />
+    <ClCompile Include="APIs\OpenGL\AppController.cpp" />
     <ClCompile Include="APIs\OpenGL\OpenGL4Api.cpp" />
     <ClCompile Include="APIs\OpenGL\Camera.cpp" />
     <ClCompile Include="APIs\OpenGL\FileLoader.cpp" />
     <ClCompile Include="APIs\OpenGL\Mesh.cpp" />
     <ClCompile Include="APIs\OpenGL\Pipeline.cpp" />
+    <ClCompile Include="APIs\OpenGL\Renderer.cpp" />
     <ClCompile Include="APIs\OpenGL\Scene.cpp" />
     <ClCompile Include="APIs\OpenGL\Texture.cpp" />
     <ClCompile Include="APIs\OpenGL\Time.cpp" />
     <ClCompile Include="APIs\OpenGL\Window.cpp" />
     <ClCompile Include="APIs\OpenGL\GameObject.cpp" />
     <ClCompile Include="APIs\Helpers\FileWriter.cpp" />
+    <ClCompile Include="APIs\Transform.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="APIs\OpenGL\Material.cpp" />
@@ -161,23 +167,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APIs\GreenCowEngine.h" />
+    <ClInclude Include="APIs\Helpers\AssetsLoader.h" />
+    <ClInclude Include="APIs\Helpers\AssetWrapper.h" />
     <ClInclude Include="APIs\Helpers\FileReader.h" />
     <ClInclude Include="APIs\IGPUApi.h" />
+    <ClInclude Include="APIs\OpenGL\AppController.h" />
     <ClInclude Include="APIs\OpenGL\OpenGL4Api.h" />
     <ClInclude Include="APIs\OpenGL\Camera.h" />
     <ClInclude Include="APIs\OpenGL\FileLoader.h" />
     <ClInclude Include="APIs\OpenGL\Mesh.h" />
     <ClInclude Include="APIs\OpenGL\Pipeline.h" />
+    <ClInclude Include="APIs\OpenGL\Renderer.h" />
     <ClInclude Include="APIs\OpenGL\Scene.h" />
     <ClInclude Include="APIs\OpenGL\Texture.h" />
     <ClInclude Include="APIs\OpenGL\Time.h" />
     <ClInclude Include="APIs\OpenGL\Window.h" />
     <ClInclude Include="APIs\OpenGL\GameObject.h" />
     <ClInclude Include="APIs\Helpers\FileWriter.h" />
+    <ClInclude Include="APIs\Transform.h" />
     <ClInclude Include="Libraries\include\glad\glad.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3native.h" />
-    <ClInclude Include="Libraries\include\json\json.h" />
     <ClInclude Include="Libraries\include\KHR\khrplatform.h" />
     <ClInclude Include="APIs\OpenGL\Material.h" />
     <ClInclude Include="APIs\OpenGL\Shader.h" />

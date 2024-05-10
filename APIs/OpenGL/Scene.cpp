@@ -63,20 +63,21 @@ void OpenGL::Scene::Init()
 		return;
 	}
 
-	ActiveCamera->Setup(60, 800, 600, 0.01f, 1000.f);
-	ActiveCamera->Target = { 0.0f, 0.0f, 1.0f };
+	ActiveCamera->Setup(90, 800, 600, 0.01f, 1000.f);
+	ActiveCamera->Target = glm::vec3( 0.0f, 0.0f, 1.0f );
+
+	GLuint defaultProgram = refPipeline->DefaultProgram();
 
 	Mesh* mesh = new Mesh(ActiveCamera);
 	mesh->Setup(vertices, indices);
-	mesh->transform.Translate({ 0.0f, 0.0f, -4.0f });
-	mesh->transform.Rotate({0.0f, 1.0f, 0.0f}, 3.14f / 4);
-	mesh->transform.ReScale(glm::vec3(1.0f));
 	mesh->Texture = loader.LoadTexture("Assets/Textures/ground.jpg");
 
-	GLuint defaultProgram = refPipeline->DefaultProgram();
+	GameObject* go = new GameObject(mesh, defaultProgram);
+	go->WorldTransform.Translate(glm::vec3(0.0f, 40.0f, 100.0f ));
+
 	//Helpers::SerializedDataRetriever::GetDefaultProgram(defaultProgram);
 
-	GameObjects.push_back(new GameObject(mesh, defaultProgram));
+	GameObjects.push_back(go);
 }
 
 void OpenGL::Scene::Update(const float deltaTime)

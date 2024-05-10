@@ -166,7 +166,7 @@ void OpenGL::OpenGL4Api::SetupInputBinding()
 	glfwSetKeyCallback(window->GetWindowData(), (GLFWkeyfun)key_callback);
 	glfwSetWindowCloseCallback(window->GetWindowData(),
 		(GLFWwindowclosefun)window_close_callback);
-	//InputPressMatcher->Add(GLFW_KEY_ESCAPE, [this]() { window->Close(); });
+	InputPressMatcher->Add(GLFW_KEY_ESCAPE, [this]() { window->Close(); });
 	InputPressMatcher->Add(GLFW_KEY_W, [this]() { movespd = 10.f;  });
 	InputPressMatcher->Add(GLFW_KEY_S, [this]() { movespd = -10.f; });
 	InputPressMatcher->Add(GLFW_KEY_D, [this]() { angspd = 5.f; });
