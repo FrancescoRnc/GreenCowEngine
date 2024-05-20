@@ -1,5 +1,5 @@
 #pragma once
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 
 namespace Helpers
 {
@@ -18,7 +18,7 @@ namespace Helpers
 			
 		}
 
-		//static inline Asset& GetAsset(std::string name)
+		//static inline AssetContent& GetAsset(std::string name)
 		//{
 		//	return _wrapper[name];
 		//}

@@ -4,22 +4,31 @@ void OpenGL::Camera::Setup(const float _FOV,
 	const float _width,	const float _height,
 	const float _znear, const float _zfar)
 {
-	FOV = _FOV; viewWidth = _width; viewHeight = _height;
-	znear = _znear; zfar = _zfar;
-
 	glm::vec3 pos = { -1.0f, 0.0f, 5.0f };
-	//glm::vec3 front = { 0.0f, 0.0f, 1.0f };
-	viewMatrix = glm::lookAt(pos, pos + Target, glm::vec3(0.0f, 1.0f, 0.0f));
-	projectionMatrix = glm::perspective(FOV, viewWidth / viewHeight,
-		znear, zfar);
-	orthoMatrix = glm::ortho<GLfloat>(0, viewWidth, 0, viewHeight);
+	viewMatrix = glm::lookAt(pos, pos + Target, Transform::UP);
+	SetPerspective(info.FOV, _width / _height,
+				   info.zNear, info.zFar);
 
-	transform.modelMatrix = viewMatrix * projectionMatrix;
+	orthoMatrix = glm::ortho<GLfloat>(0, _width, 0, _height);
+
+	transform.ModelMatrix = viewMatrix * projectionMatrix;
 }
 
 void OpenGL::Camera::LookAt(const glm::vec3 target)
 {
-	viewMatrix = glm::lookAt(transform.Position, target, transform.Up);
+	viewMatrix = glm::lookAt(transform.Position, target, Transform::UP);
+}
+
+void OpenGL::Camera::SetPerspective(const float fov, const float aspect, const float znear, const float zfar)
+{
+	info = { fov, aspect, znear, zfar };
+	projectionMatrix = info.GetPerspective();
+}
+
+void OpenGL::Camera::SetFOV(const float fov)
+{
+	info.FOV = fov;
+	projectionMatrix = info.GetPerspective();
 }
 
 void OpenGL::Camera::Orbit(const glm::vec3 target, const float distance, const float deltaRad)
@@ -30,14 +39,14 @@ void OpenGL::Camera::Orbit(const glm::vec3 target, const float distance, const f
 }
 void OpenGL::Camera::Update()
 {
-	viewMatrix = projectionMatrix = glm::mat4(1.0f);
+	//viewMatrix = projectionMatrix = glm::mat4(1.0f);
 
-	glm::vec3 pos = { -1.0f, 0.0f, 2.0f };
-	//glm::vec3 front = { 0.0f, 0.0f, 1.0f };
-	viewMatrix = glm::lookAt(pos, pos + Target, glm::vec3(0.0f, 1.0f, 0.0f));
-	projectionMatrix = glm::perspective(FOV, viewWidth / viewHeight,
-		znear, zfar);
-	//orthoMatrix = glm::ortho<GLfloat>(0, viewWidth, 0, viewHeight);
+	//glm::vec3 pos = { -1.0f, 0.0f, 2.0f };
+	//viewMatrix = glm::lookAt(transform.Position, transform.Position + Target, glm::vec3(0.0f, 1.0f, 0.0f));
+	//projectionMatrix = glm::perspective(FOV, viewWidth / viewHeight,
+	//	znear, zfar);
 
-	transform.modelMatrix = viewMatrix * projectionMatrix;
+	LookAt(transform.Position + Target);
+
+	transform.ModelMatrix = viewMatrix * projectionMatrix;
 }

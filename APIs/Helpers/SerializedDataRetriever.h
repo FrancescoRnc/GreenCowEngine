@@ -1,14 +1,12 @@
 #pragma once
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 
 namespace Helpers
 {
 #define SHADER_PROGRAMS "ShaderPrograms.csv"
 
-	struct ProgramMap : std::unordered_map<std::string, uint32_t>
-	{
-
-	};
+	#define ProgramMap std::unordered_map<std::string, uint32_t>
+	
 
 	class SerializedDataRetriever
 	{

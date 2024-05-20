@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Pipeline.h"
+#include "Renderer.h"
 #include "FileLoader.h"
 #include "Scene.h"
 #include "../Helpers/FileReader.h"
@@ -16,14 +17,16 @@ OpenGL::OpenGL4Api::OpenGL4Api()
 {
 	window = new Window();
 	pipeline = new Pipeline();
-	InputPressMatcher =
-		new Engine::FunctionMatcher<int>(0, []() { /*std::cout << "Press nothing." << std::endl;*/ });
-	InputReleaseMatcher =
-		new Engine::FunctionMatcher<int>(0, []() { /*std::cout << "Release nothing." << std::endl;*/ });
+	//renderer = new Renderer(pipeline);
+	InputPressMatcher = new Engine::FunctionMatcher<int>(0, []() 
+		{ /*std::cout << "Press nothing." << std::endl;*/ });
+	InputReleaseMatcher = new Engine::FunctionMatcher<int>(0, []() 
+		{ /*std::cout << "Release nothing." << std::endl;*/ });
 
-	//camera = new Camera();
-	//mesh = new Mesh(camera);
-	activeScene = new Scene(pipeline);
+	activeScene = new Scene();
+
+
+	time = {};
 }
 
 void OpenGL::OpenGL4Api::CallKeyFunc(int action, int key)
@@ -55,9 +58,6 @@ void OpenGL::OpenGL4Api::Initialize()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	//const int windowWidth = 800;
-	//const int windowHeight = 600;
-	
 	window->Create("GreenCow Engine", 800, 600);
 	glfwSetWindowUserPointer(window->GetWindowData(), this);
 
@@ -81,33 +81,17 @@ void OpenGL::OpenGL4Api::LoadFiles()
 			"Assets/Shaders/Mesh.vert",
 			"Assets/Shaders/Textured.frag"
 		}, true);
-
-		pipeline->SerializePrograms();
-
-		/*std::cout << content.source << std::endl;
-		FileLoader loader;
-		std::vector<Vertex> vertices;
-		std::vector<GLint> indices;
-
-		if (!loader.LoadModel(relativeAssetDirectory + "Models/model_cow.obj", vertices, indices)) {
-			return;
-		}
-		mesh->Setup(vertices, indices);
-		mesh->transform.Translate({ 0.0f, 0.0f, -4.0f });
-		//mesh->transform.Rotate({0.0f, 1.0f, 0.0f}, 3.14f / 4);
-		mesh->transform.ReScale(glm::vec3(1.0f));
-		mesh->Texture = loader.LoadTexture("Assets/Textures/ground.jpg");*/
 	}
-	catch (const std::exception& ex) {
-		std::cout << "Error during files loading!!!" << std::endl;
-		return;
+	catch (const std::exception& ex) 
+	{
+		std::cout << "Error during files loading!" << ex.what() << std::endl;
 	}
 }
 
 void OpenGL::OpenGL4Api::Start() 
 {
 	activeScene->Init();
-
+	// TODO: Butta le mesh dentro Pipeline
 	window->Show();
 }
 
@@ -123,16 +107,10 @@ void OpenGL::OpenGL4Api::DequeueEvents()
 
 void OpenGL::OpenGL4Api::Update()
 {
-	//std::cout << "FPS: " << 1 / deltatime << std::endl;
-	const float deltatime = time.GetDelta();
+	const double deltatime = time.GetDelta();
+	std::cout << "\rFPS: " << 1 / deltatime;
 
-	activeScene->Update(deltatime);
-
-	//camera->Update();
-
-	//if (!mesh) return;
-	//mesh->transform.AddRotation({ 0.0f, 1.0f, 0.0f }, angspd * deltatime);
-	//mesh->transform.AddTranslation(glm::vec3(0.0f, 0.0f, 1.0f) * movespd * deltatime);
+	activeScene->Update((float)deltatime);
 }
 
 void OpenGL::OpenGL4Api::Clear()
@@ -142,8 +120,7 @@ void OpenGL::OpenGL4Api::Clear()
 
 void OpenGL::OpenGL4Api::Draw()
 {
-	//mesh->Draw(pipeline->Program);
-	activeScene->Draw();
+	pipeline->Draw();
 }
 
 void OpenGL::OpenGL4Api::Present()
@@ -153,6 +130,7 @@ void OpenGL::OpenGL4Api::Present()
 
 void OpenGL::OpenGL4Api::Exit()
 {
+	std::cout << std::endl;
 	std::cout << "OpenGL: ";
 	std::cout << "Exiting Program..." << std::endl;
 
@@ -166,6 +144,7 @@ void OpenGL::OpenGL4Api::SetupInputBinding()
 	glfwSetKeyCallback(window->GetWindowData(), (GLFWkeyfun)key_callback);
 	glfwSetWindowCloseCallback(window->GetWindowData(),
 		(GLFWwindowclosefun)window_close_callback);
+
 	InputPressMatcher->Add(GLFW_KEY_ESCAPE, [this]() { window->Close(); });
 	InputPressMatcher->Add(GLFW_KEY_W, [this]() { movespd = 10.f;  });
 	InputPressMatcher->Add(GLFW_KEY_S, [this]() { movespd = -10.f; });

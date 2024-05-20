@@ -46,11 +46,11 @@ I& operator= (I&&) = delete; \
 
 #ifndef INCLUDE_HELPERS
 #define INCLUDE_HELPERS
-#include "Helpers/FileReader.h"
-#include "Helpers/FileWriter.h"
-#include "Helpers/SerializedDataRetriever.h"
-#include "Helpers/AssetWrapper.h"
-#include "Helpers/AssetsLoader.h"
+#include "../Helpers/FileReader.h"
+#include "../Helpers/FileWriter.h"
+#include "../Helpers/SerializedDataRetriever.h"
+#include "../Helpers/AssetWrapper.h"
+#include "../Helpers/AssetsLoader.h"
 #endif // !INCLUDE_HELPERS
 
 
@@ -68,8 +68,6 @@ namespace Engine
 		public:
 
 		virtual void Setup(std::vector<Vertex> vertices, std::vector<int> indices) = 0;
-
-		virtual void Draw(uint32_t program) = 0;
 	};
 
 	class GPUPipeline
@@ -77,7 +75,6 @@ namespace Engine
 		public:
 
 		virtual void CreateProgram(std::string programName, std::vector<std::string> files, bool useAsDefault) = 0;
-
 		virtual void Draw() = 0;
 	}; 
 
@@ -94,6 +91,16 @@ namespace Engine
 	public:
 		virtual void Serialize() = 0;
 		virtual T Deserialize() = 0;
+	};
+
+	template<typename T>
+	class IDataArchiver
+	{
+	protected:
+		std::unordered_map<std::string, T> _storedObjects;
+	public:
+		virtual void Store(std::string id, T obj) = 0;
+		virtual T* Get(std::string id) = 0;
 	};
 
 	class IUpdatable
@@ -138,15 +145,14 @@ namespace Engine
 		public:
 
 		virtual void Setup(float FOV, float width, float height, float znear, float zfar) = 0;
-		//virtual const glm::mat4 GetView() const = 0;
-		//virtual const glm::mat4 GetProjection() const = 0;
-		//virtual const glm::vec3 GetPosition() const = 0;
-		//virtual const glm::vec3 GetDirection() const = 0;
-		//virtual const glm::quat GetRotation() const = 0;
 		virtual void LookAt(const glm::vec3 target) = 0;
+		virtual void SetPerspective(const float fov, const float aspect, const float znear, const float zfar) = 0;
+		virtual void SetFOV(const float fov) = 0;
 		virtual void Orbit(const glm::vec3 target, 
 						   const float distance, 
 						   const float deltaRad) = 0;
+		virtual const glm::mat4 GetView() = 0;
+		virtual const glm::mat4 GetProjection() = 0;
 
 		virtual void Update() = 0;
 	};
@@ -155,8 +161,7 @@ namespace Engine
 	{
 		public:
 
-		virtual const float GetDelta() = 0;
-
+		virtual const double GetDelta() = 0;
 	};
 
 	class IScene
@@ -167,12 +172,6 @@ namespace Engine
 		virtual void Unload() = 0;
 		virtual void Init() = 0;
 		virtual void Update(const float deltaTime) = 0;
-		virtual void Draw() = 0;
-	};
-
-	class IAppController
-	{
-
 	};
 
 

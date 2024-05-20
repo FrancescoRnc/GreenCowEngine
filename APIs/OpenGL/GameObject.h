@@ -1,5 +1,5 @@
 #pragma once
-#include "../GreenCowEngine.h";
+#include "../Engine/GreenCowEngine.h"
 #include "Material.h"
 #include "Mesh.h"
 //#include "Pipeline.h"
@@ -17,42 +17,23 @@ namespace OpenGL
 
 	class GameObject : ISerializable<GameObjectData>
 	{
-		GLuint _currentProgram{0};
+	public:
 
-		public:
-
-		Material* CurrentMaterial{};
 		Mesh* CurrentMesh{};
 		Transform WorldTransform;
-		
+
 
 		GameObject()
 		{
 
 		}
 
-		GameObject(const GLuint defaultProgram)
-		{
-			_currentProgram = defaultProgram;
-		}
-
-		GameObject(Mesh* mesh, const GLuint defaulProgram)
+		GameObject(Mesh* mesh)
 		{
 			CurrentMesh = mesh;
-			_currentProgram = defaulProgram;
-		}
-
-		GameObject(Mesh* mesh, Material* material)
-		{
-			CurrentMesh = mesh;
-			CurrentMaterial = material;
-			_currentProgram = material->GetProgram();
 		}
 
 		void Update(const float deltatime);
-		void Draw();
-		
-		void SetMaterial(Material* mat);
 
 		GameObjectData GetData();
 

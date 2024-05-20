@@ -1,9 +1,9 @@
 #include "Time.h"
 
-const float OpenGL::Time::GetDelta()
+const double OpenGL::Time::GetDelta()
 {
 	now = glfwGetTime();
-	float delta = now - last;
+	double delta = now - last;
 	last = now;
 	return delta;
 }

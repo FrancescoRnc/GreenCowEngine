@@ -1,40 +1,62 @@
 #pragma once
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 #include "Camera.h"
+#include "Material.h"
 
 namespace OpenGL
 {
+	struct MeshData
+	{
+		std::string Name{""};
+		std::vector<Vertex> Vertices{};
+		std::vector<GLint> Indices{};
+		GLuint VAO = 0;
+		GLuint VBO = 0;
+		GLuint EBO = 0;
+
+		MeshData() {}
+
+		MeshData(
+			const std::string name, 
+			const std::vector<Vertex> vertices, 
+			const std::vector<GLint> indices, 
+			const GLuint vao, 
+			const GLuint vbo, 
+			const GLuint ebo) 
+			: Name(name), Vertices(vertices), Indices(indices), VAO(vao), VBO(vbo), EBO(ebo)
+		{ }
+
+	private:
+		//static unsigned int meshCount;
+	};
+
 	class Mesh : public Engine::GPUMesh
 	{
-		public:
-		Mesh(Camera* _refCamera) : refCamera(_refCamera) {}
+	public:
+		Mesh(MeshData* data, Material* mat) : Data(data), CurrentMaterial(mat) {}
 
 		// Inherited via GPUMesh
 		void Setup(std::vector<Engine::Vertex> vertices, std::vector<GLint> indices) override;
-		void Draw(uint32_t program) override;
 		// - - - -
+				
+		void Draw();// override;
 
-		//void RegisterVertices(Pipeline* pipeline);
+		MeshData* Data;
+		Material* CurrentMaterial;
 
-		std::vector<Engine::Vertex> Vertices;
-		std::vector<GLint> Indices;
-
-		GLuint VAO = 0; 
-		GLuint VBO = 0;
-		GLuint EBO = 0;
-		GLuint Texture = 0;
-		GLuint Override_Program = 0;
 		glm::mat4 ModelMatrix{ glm::mat4(1.0f) };
-
-		Camera* refCamera;
-		float angle = 0.f;
-
-		//friend class Transform;
-		Engine::Transform transform = {};
+	};
 
 
-		private:
+	struct MeshInstanceProfile
+	{
+		//std::string MeshID;
+		GLuint Program{ 0 };
+		//GLuint InstanceVAO{ 0 };
+		std::string MeshID{ "" };
+		std::string MaterialID{ "" };
+		std::vector<glm::mat4> Models{};
 
-
+		inline size_t Count() { return Models.size(); }
 	};
 }

@@ -1,22 +1,25 @@
 #pragma once
-#include "../GreenCowEngine.h";
+#include "../Engine/GreenCowEngine.h"
 #include "Texture.h"
+#include "Shader.h"
 
 namespace OpenGL
 {
 	class Material
 	{
-		GLuint Program;
+		GLuint program = 0;
 
 		public:
-		Material(GLuint defaulProgram) : Program(defaulProgram)
-		{}
+		Material(const GLuint defaulProgram) : UsedShader(nullptr), Textures({}), program(defaulProgram) {}
+		Material(Shader* shader, std::vector<GLuint*> textures) : UsedShader(shader), Textures(textures) {}
 
-		std::vector<ITexture*> Textures;
+		Shader* UsedShader;
+		std::vector<GLuint*> Textures;
 
-		inline GLuint GetProgram() const
-		{
-			return Program;
-		}
+		GLuint GetProgram() const;
+
+		void ApplyUniformMat4To(const char* uniformName, glm::mat4 value);
+		void ApplyMat4Uniforms(const std::unordered_map<const char*, glm::mat4> uniforms);
+		void ApplyTextures();
 	};
 }

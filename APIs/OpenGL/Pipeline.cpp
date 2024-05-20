@@ -1,9 +1,12 @@
 #include "Pipeline.h"
+#include "DataArchivers/GameDataArchiver.h"
+#include "Shader.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "../Engine/CameraController.h"
 
 void OpenGL::Pipeline::CreateProgram(std::string programName, std::vector<std::string> files, bool useAsDefault)
 {
-	//auto fullVSpath = "Assets/Shaders/v_" + shaders_name + ".glsl";
-	//auto fullFSpath = "Assets/Shaders/f_" + shaders_name + ".glsl";
 	auto fullVSpath = files[0];
 	auto fullFSpath = files[1];
 
@@ -53,7 +56,6 @@ void OpenGL::Pipeline::CreateProgram(std::string programName, std::vector<std::s
 	}
 
 	GLuint newProgram = glCreateProgram();
-	//Program = glCreateProgram();
 
 	glAttachShader(newProgram, vertex_shader);
 	glAttachShader(newProgram, fragment_shader);
@@ -80,10 +82,66 @@ void OpenGL::Pipeline::CreateProgram(std::string programName, std::vector<std::s
 	glDeleteShader(fragment_shader);
 
 	_registeredPrograms.insert({ programName, newProgram });
+	GameDataArchiver::Get()->StoreShader(programName, { newProgram });
 	if (useAsDefault) _defaultProgram = newProgram;
 }
 
 void OpenGL::Pipeline::Draw()
 {
+	UseDefaultProgram();
 
+	/*for (auto mesh : meshes)
+	{
+		glUseProgram(mesh->CurrentMaterial->GetProgram());
+
+		mesh->CurrentMaterial->ApplyUniformMat4To("camMatrix", refCamera->GetView() * refCamera->GetProjection());
+		mesh->CurrentMaterial->ApplyMat4Uniforms(
+			{
+				{"camMatrix", refCamera->GetView() * refCamera->GetProjection()},
+				{"model", mesh->ModelMatrix}
+			});
+
+		glBindVertexArray(mesh->Data->VAO);
+		//glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(mesh->Data->Vertices.size()));
+		//glDrawArraysInstanced(GL_TRIANGLES, 0, static_cast<GLsizei>(mesh->Data->Vertices.size()), 10);
+		glBindVertexArray(0);
+	}*/
+
+	ICamera* cam = CameraController::Get()->GetActiveCamera();
+	for (auto mprofile : meshInstances)
+	{
+		UseProgram(mprofile.Program);
+
+		GLsizei count = static_cast<GLsizei>(mprofile.Count());
+		Material* mat = GameDataArchiver::Get()->GetMaterial(mprofile.MaterialID);
+		MeshData* mdata = GameDataArchiver::Get()->GetMesh(mprofile.MeshID);
+
+		mat->ApplyUniformMat4To("camMatrix", cam->GetView() * cam->GetProjection());
+		for (int i = 0; i < count; i++)
+		{
+			mat->ApplyUniformMat4To(("models[" + std::to_string(i) + "]").c_str(), mprofile.Models[i]);
+		}
+
+		glBindVertexArray(mdata->VAO);
+		glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(mdata->Indices.size()), GL_UNSIGNED_INT, 0, count);
+		glDrawArraysInstanced(GL_TRIANGLES, 0, static_cast<GLsizei>(mdata->Vertices.size()), count);
+		glBindVertexArray(0);
+	}
 }
+
+void OpenGL::Pipeline::InjectMeshes(std::vector<Mesh*> inMeshes)
+{
+	meshes = inMeshes;
+}
+
+GLuint OpenGL::Pipeline::DefaultProgram() const { return _defaultProgram; }
+GLuint OpenGL::Pipeline::GetProgram(const std::string name) const
+{
+	auto found = _registeredPrograms.find(name);
+	return found != _registeredPrograms.end() ? _registeredPrograms.at(name) : 0;
+}
+
+void OpenGL::Pipeline::UseDefaultProgram() const { glUseProgram(_defaultProgram); }
+
+void OpenGL::Pipeline::UseProgram(GLuint program) const { glUseProgram(program); }

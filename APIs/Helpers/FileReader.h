@@ -12,7 +12,6 @@ namespace Helpers
 
 	struct FileContent
 	{
-		//const char* source;
 		std::unique_ptr<std::vector<std::byte>> source;
 		size_t size = 0;
 	};

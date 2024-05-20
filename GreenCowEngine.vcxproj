@@ -139,12 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="APIs\GreenCowEngine.cpp" />
+    <ClCompile Include="APIs\Engine\GreenCowEngine.cpp" />
     <ClCompile Include="APIs\Helpers\AssetsLoader.cpp" />
     <ClCompile Include="APIs\Helpers\AssetWrapper.cpp" />
     <ClCompile Include="APIs\Helpers\FileReader.cpp" />
-    <ClCompile Include="APIs\IGPUApi.cpp" />
-    <ClCompile Include="APIs\OpenGL\AppController.cpp" />
+    <ClCompile Include="APIs\Engine\IGPUApi.cpp" />
     <ClCompile Include="APIs\OpenGL\OpenGL4Api.cpp" />
     <ClCompile Include="APIs\OpenGL\Camera.cpp" />
     <ClCompile Include="APIs\OpenGL\FileLoader.cpp" />
@@ -157,7 +156,10 @@
     <ClCompile Include="APIs\OpenGL\Window.cpp" />
     <ClCompile Include="APIs\OpenGL\GameObject.cpp" />
     <ClCompile Include="APIs\Helpers\FileWriter.cpp" />
-    <ClCompile Include="APIs\Transform.cpp" />
+    <ClCompile Include="APIs\Engine\Transform.cpp" />
+    <ClCompile Include="APIs\OpenGL\DataArchivers\GameDataArchiver.cpp" />
+    <ClCompile Include="APIs\Engine\GameApplication.cpp" />
+    <ClCompile Include="APIs\Engine\CameraController.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="APIs\OpenGL\Material.cpp" />
@@ -166,12 +168,11 @@
     <ClCompile Include="stb.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="APIs\GreenCowEngine.h" />
+    <ClInclude Include="APIs\Engine\GreenCowEngine.h" />
     <ClInclude Include="APIs\Helpers\AssetsLoader.h" />
     <ClInclude Include="APIs\Helpers\AssetWrapper.h" />
     <ClInclude Include="APIs\Helpers\FileReader.h" />
-    <ClInclude Include="APIs\IGPUApi.h" />
-    <ClInclude Include="APIs\OpenGL\AppController.h" />
+    <ClInclude Include="APIs\Engine\IGPUApi.h" />
     <ClInclude Include="APIs\OpenGL\OpenGL4Api.h" />
     <ClInclude Include="APIs\OpenGL\Camera.h" />
     <ClInclude Include="APIs\OpenGL\FileLoader.h" />
@@ -184,7 +185,10 @@
     <ClInclude Include="APIs\OpenGL\Window.h" />
     <ClInclude Include="APIs\OpenGL\GameObject.h" />
     <ClInclude Include="APIs\Helpers\FileWriter.h" />
-    <ClInclude Include="APIs\Transform.h" />
+    <ClInclude Include="APIs\Engine\Transform.h" />
+    <ClInclude Include="APIs\OpenGL\DataArchivers\GameDataArchiver.h" />
+    <ClInclude Include="APIs\Engine\GameApplication.h" />
+    <ClInclude Include="APIs\Engine\CameraController.h" />
     <ClInclude Include="Libraries\include\glad\glad.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3.h" />
     <ClInclude Include="Libraries\include\GLFW\glfw3native.h" />
@@ -198,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scenes\Scene001.scene" />
+    <None Include="Assets\Shaders\InstancedMesh.vert" />
     <None Include="Assets\Shaders\Mesh.frag" />
     <None Include="Assets\Shaders\Textured.frag" />
     <None Include="Assets\Shaders\Mesh.vert" />

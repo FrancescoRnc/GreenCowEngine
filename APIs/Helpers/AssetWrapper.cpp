@@ -1,6 +1,6 @@
 #include "AssetWrapper.h"
 
-void Helpers::AssetWrapper::RegisterAssets(const std::unordered_map<std::string, Asset> assets)
+void Helpers::AssetWrapper::RegisterAssets(const std::unordered_map<std::string, AssetContent> assets)
 {
 	for (auto asset : assets)
 	{

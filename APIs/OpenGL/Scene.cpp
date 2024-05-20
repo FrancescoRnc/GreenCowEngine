@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include "FileLoader.h"
+#include "DataArchivers/GameDataArchiver.h"
+#include "../Engine/CameraController.h"
 
 void OpenGL::Scene::Load(const char* scene_filename)
 {
@@ -55,27 +57,28 @@ void OpenGL::Scene::Unload()
 
 void OpenGL::Scene::Init() 
 {
-	FileLoader loader;
 	std::vector<Vertex> vertices;
 	std::vector<GLint> indices;
-
-	if (!loader.LoadModel("Assets/Models/model_cow.obj", vertices, indices)) {
-		return;
-	}
+	MeshData meshData;
 
 	ActiveCamera->Setup(90, 800, 600, 0.01f, 1000.f);
 	ActiveCamera->Target = glm::vec3( 0.0f, 0.0f, 1.0f );
+	CameraController::Get()->Possess(ActiveCamera);
 
-	GLuint defaultProgram = refPipeline->DefaultProgram();
+	if (!FileLoader::LoadMesh("Assets/Models/Skull.obj", meshData)) {
+		return;
+	}
+	GameDataArchiver::Get()->StoreMesh("skull", meshData);
 
-	Mesh* mesh = new Mesh(ActiveCamera);
-	mesh->Setup(vertices, indices);
-	mesh->Texture = loader.LoadTexture("Assets/Textures/ground.jpg");
+	GLuint defaultProgram = 1;
 
-	GameObject* go = new GameObject(mesh, defaultProgram);
-	go->WorldTransform.Translate(glm::vec3(0.0f, 40.0f, 100.0f ));
+	Material mat = { defaultProgram };
+	GameDataArchiver::Get()->StoreMaterial("skull", mat);
 
-	//Helpers::SerializedDataRetriever::GetDefaultProgram(defaultProgram);
+	Mesh* mesh = new Mesh(GameDataArchiver::Get()->GetMesh("skull"), GameDataArchiver::Get()->GetMaterial("skull"));
+
+	GameObject* go = new GameObject(mesh);
+	go->WorldTransform.Translate(glm::vec3(0.0f, 0.0f, 4.0f ));
 
 	GameObjects.push_back(go);
 }
@@ -87,13 +90,5 @@ void OpenGL::Scene::Update(const float deltaTime)
 	for (auto go : GameObjects)
 	{
 		go->Update(deltaTime);
-	}
-}
-
-void OpenGL::Scene::Draw()
-{
-	for (auto go : GameObjects)
-	{
-		go->Draw();
 	}
 }

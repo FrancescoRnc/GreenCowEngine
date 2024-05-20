@@ -1,17 +1,17 @@
 #pragma once
 
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 
 namespace OpenGL
 {
 	class Time : public Engine::ITime
 	{
-		public:
+	public:
 
-		const float GetDelta() override;
+		const double GetDelta() override;
 
-		private:
+	private:
 
-		float last, now = 0.f;
+		double last{ 0.f }, now{ 0.f };
 	};
 }

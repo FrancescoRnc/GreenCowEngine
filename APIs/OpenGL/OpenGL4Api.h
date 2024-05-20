@@ -1,15 +1,10 @@
 #pragma once
-#include "../GreenCowEngine.h"
-#include "../IGPUApi.h"
+#include "../Engine/GreenCowEngine.h"
+#include "../Engine/IGPUApi.h"
 #include "Time.h"
 
 namespace OpenGL
 {
-	//class Window;
-	//class Camera;
-	//class Mesh;
-	//class Pipeline;
-	//class Time;
 	class OpenGL4Api : public Engine::IGPUApi
 	{
 		public:
@@ -36,10 +31,9 @@ namespace OpenGL
 
 
 		class Window* window;
-		//class Camera* camera;
 		class Pipeline* pipeline;
+		//class Renderer* renderer;
 		class Scene* activeScene;
-		//class Mesh* mesh;
 		Time time;
 
 		private:

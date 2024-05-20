@@ -1,15 +1,13 @@
 #pragma once
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 
 namespace OpenGL
 {
-	class Shader
+	struct Shader
 	{
-		std::vector<std::string> uniforms;
+		GLuint Program;
+		std::vector<const char*> Uniforms;
 
-		public:
-		GLuint ID;
-
-		//void SetUniform("name", )
+		Shader(GLuint program) : Program(program), Uniforms({}) { }
 	};
 }

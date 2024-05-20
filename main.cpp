@@ -2,6 +2,7 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 #include "APIs/OpenGL/OpenGL4Api.h"
+#include "APIs/Engine/GameApplication.h"
 
 #define USE_OPENGL(V) V = new OpenGL::OpenGL4Api();
 //#define USE_DIRECT3D(V) V = new Direct3DApi();
@@ -15,22 +16,15 @@ int main()
 
 	USE_OPENGL(gpuapi)
 
-	gpuapi->Initialize();
-	gpuapi->LoadFiles();
-	gpuapi->Start();
+	GameApplication* app = new GameApplication(gpuapi);
 
-	while (gpuapi->IsWindowOpen())
-	{
-		gpuapi->DequeueEvents();
-		gpuapi->Update();
+	app->Initialize();
 
-		gpuapi->Clear();
-		gpuapi->Draw();
-		gpuapi->Present();
-	}
+	app->Run();	
 
-	gpuapi->Exit();
+	app->Exit();
 
+	delete app;
 	delete gpuapi;
 
 	return 0;

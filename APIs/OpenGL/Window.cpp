@@ -38,6 +38,8 @@ void OpenGL::Window::Destroy()
 	glfwDestroyWindow(internal_window);
 }
 
+GLFWwindow* OpenGL::Window::GetWindowData() const { return internal_window; }
+
 OpenGL::Window::~Window()
 {
 

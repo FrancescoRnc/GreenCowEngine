@@ -1,17 +1,17 @@
 #pragma once
-//#include "Api.h"
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
+#include "Mesh.h"
+#include "Texture.h"
 
 namespace OpenGL
 {
 	struct FileLoader
 	{
-		bool LoadModel(std::string filepath,
-					   std::vector<Engine::Vertex>& out_vertices,
-					   std::vector<GLint>& out_indices);
+		static bool LoadMesh(std::filesystem::path filepath, MeshData& out_mesh);
+		static bool LoadTexture(std::string filepath, Texture& out_texture);
+
 		const int LoadModels(std::string directory);
 		bool LoadScenes(std::string directory);
 
-		GLuint LoadTexture(std::string filepath);
 	};
 }

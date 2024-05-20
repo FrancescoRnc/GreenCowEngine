@@ -1,5 +1,5 @@
 #pragma once
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 
 namespace OpenGL
 {
@@ -20,7 +20,7 @@ namespace OpenGL
 		void Destroy() override;
 		// - - - -
 
-		GLFWwindow* GetWindowData() { return internal_window; }
+		GLFWwindow* GetWindowData() const;
 
 		bool IsOpen = true;
 

@@ -30,7 +30,7 @@
     <ClCompile Include="APIs\OpenGL\OpenGL4Api.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\IGPUApi.cpp">
+    <ClCompile Include="APIs\Engine\IGPUApi.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="APIs\OpenGL\Camera.cpp">
@@ -72,7 +72,7 @@
     <ClCompile Include="APIs\Helpers\FileWriter.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\Transform.cpp">
+    <ClCompile Include="APIs\Engine\Transform.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="APIs\OpenGL\Renderer.cpp">
@@ -84,10 +84,16 @@
     <ClCompile Include="APIs\Helpers\AssetsLoader.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\OpenGL\AppController.cpp">
+    <ClCompile Include="APIs\Engine\GreenCowEngine.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\GreenCowEngine.cpp">
+    <ClCompile Include="APIs\OpenGL\DataArchivers\GameDataArchiver.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\Engine\GameApplication.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="APIs\Engine\CameraController.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,10 +116,10 @@
     <ClInclude Include="APIs\OpenGL\OpenGL4Api.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\GreenCowEngine.h">
+    <ClInclude Include="APIs\Engine\GreenCowEngine.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\IGPUApi.h">
+    <ClInclude Include="APIs\Engine\IGPUApi.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="APIs\OpenGL\Camera.h">
@@ -155,7 +161,7 @@
     <ClInclude Include="APIs\Helpers\FileWriter.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\Transform.h">
+    <ClInclude Include="APIs\Engine\Transform.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="APIs\OpenGL\Renderer.h">
@@ -167,7 +173,13 @@
     <ClInclude Include="APIs\Helpers\AssetsLoader.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\OpenGL\AppController.h">
+    <ClInclude Include="APIs\OpenGL\DataArchivers\GameDataArchiver.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Engine\GameApplication.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="APIs\Engine\CameraController.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,6 +191,7 @@
     <None Include="Assets\Shaders\Mesh.frag" />
     <None Include="Assets\Shaders\Mesh.vert" />
     <None Include="Assets\Shaders\Textured.frag" />
+    <None Include="Assets\Shaders\InstancedMesh.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\cow_texture.jpg">

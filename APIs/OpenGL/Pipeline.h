@@ -1,30 +1,32 @@
 #pragma once
-#include "../GreenCowEngine.h"
+#include "../Engine/GreenCowEngine.h"
 
 namespace OpenGL
 {
 	class Pipeline : public Engine::GPUPipeline
 	{
-		Helpers::ProgramMap _registeredPrograms{};
-		GLuint _defaultProgram;
+		ProgramMap _registeredPrograms{};
+		GLuint _defaultProgram{ 0 };
+		//class Camera* refCamera{ nullptr };
+		std::vector<class Mesh*> meshes{};
+		std::vector<struct MeshInstanceProfile> meshInstances{};
 
-		public:
+	public:
+
+		Pipeline() {}
+
+		COPY_MOVE_DELETE(Pipeline)
 
 		// Inherited via GPUPipeline
 		void CreateProgram(std::string programName, std::vector<std::string> files, bool useAsDefault = false) override;
 		void Draw() override;
 		// - - - -
 
-		std::vector<Vertex> TotalVertices = {};
-		std::vector<GLint> TotalIndices = {};
-
-		//GLuint Program = 0;
-		inline GLuint DefaultProgram() const { return _defaultProgram; }
-
-		inline void SerializePrograms() const
-		{
-			Helpers::SerializedDataRetriever::SerializePrograms(_registeredPrograms);
-		}
+		void InjectMeshes(std::vector<Mesh*> inMeshes);
+		GLuint DefaultProgram() const;
+		GLuint GetProgram(const std::string name) const;
+		void UseDefaultProgram() const;
+		void UseProgram(GLuint program) const;
 	};
 
 	
