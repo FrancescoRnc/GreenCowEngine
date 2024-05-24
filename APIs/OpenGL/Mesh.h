@@ -39,7 +39,7 @@ namespace OpenGL
 		void Setup(std::vector<Engine::Vertex> vertices, std::vector<GLint> indices) override;
 		// - - - -
 				
-		void Draw();// override;
+		void Draw();
 
 		MeshData* Data;
 		Material* CurrentMaterial;
@@ -50,11 +50,9 @@ namespace OpenGL
 
 	struct MeshInstanceProfile
 	{
-		//std::string MeshID;
 		GLuint Program{ 0 };
-		//GLuint InstanceVAO{ 0 };
-		std::string MeshID{ "" };
-		std::string MaterialID{ "" };
+		std::string MeshName{ "" };
+		std::string MaterialName{ "" };
 		std::vector<glm::mat4> Models{};
 
 		inline size_t Count() { return Models.size(); }

@@ -21,7 +21,7 @@ namespace Helpers
 		static FileContent GetFileSource(const std::string filepath)
 		{
 			FileContent content = {};
-			auto path1 = std::filesystem::current_path();
+			//auto path1 = std::filesystem::current_path();
 			auto path = std::filesystem::path(filepath);
 			content.size = std::filesystem::file_size(path);
 			content.source = std::make_unique<std::vector<std::byte>>(content.size);

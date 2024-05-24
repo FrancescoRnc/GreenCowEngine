@@ -2,6 +2,8 @@
 
 void Engine::GameApplication::Initialize()
 {
+	loader->LoadFrom("Assets");
+
 	gpuapi->Initialize();
 	gpuapi->LoadFiles();
 	gpuapi->Start();

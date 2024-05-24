@@ -49,8 +49,7 @@ I& operator= (I&&) = delete; \
 #include "../Helpers/FileReader.h"
 #include "../Helpers/FileWriter.h"
 #include "../Helpers/SerializedDataRetriever.h"
-#include "../Helpers/AssetWrapper.h"
-#include "../Helpers/AssetsLoader.h"
+#include "../Helpers/AssetManager.h"
 #endif // !INCLUDE_HELPERS
 
 

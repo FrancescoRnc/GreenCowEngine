@@ -11,10 +11,10 @@ namespace OpenGL
 
 		public:
 		Material(const GLuint defaulProgram) : UsedShader(nullptr), Textures({}), program(defaulProgram) {}
-		Material(Shader* shader, std::vector<GLuint*> textures) : UsedShader(shader), Textures(textures) {}
+		Material(Shader* shader, std::vector<GLuint> textures) : UsedShader(shader), Textures(textures), program(shader->Program) {}
 
 		Shader* UsedShader;
-		std::vector<GLuint*> Textures;
+		std::vector<GLuint> Textures;
 
 		GLuint GetProgram() const;
 

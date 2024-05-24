@@ -57,23 +57,12 @@ void OpenGL::Scene::Unload()
 
 void OpenGL::Scene::Init() 
 {
-	std::vector<Vertex> vertices;
-	std::vector<GLint> indices;
-	MeshData meshData;
 
 	ActiveCamera->Setup(90, 800, 600, 0.01f, 1000.f);
 	ActiveCamera->Target = glm::vec3( 0.0f, 0.0f, 1.0f );
 	CameraController::Get()->Possess(ActiveCamera);
 
-	if (!FileLoader::LoadMesh("Assets/Models/Skull.obj", meshData)) {
-		return;
-	}
-	GameDataArchiver::Get()->StoreMesh("skull", meshData);
-
-	GLuint defaultProgram = 1;
-
-	Material mat = { defaultProgram };
-	GameDataArchiver::Get()->StoreMaterial("skull", mat);
+	
 
 	Mesh* mesh = new Mesh(GameDataArchiver::Get()->GetMesh("skull"), GameDataArchiver::Get()->GetMaterial("skull"));
 

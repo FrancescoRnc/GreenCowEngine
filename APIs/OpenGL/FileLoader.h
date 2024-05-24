@@ -7,8 +7,8 @@ namespace OpenGL
 {
 	struct FileLoader
 	{
-		static bool LoadMesh(std::filesystem::path filepath, MeshData& out_mesh);
-		static bool LoadTexture(std::string filepath, Texture& out_texture);
+		static bool LoadMesh(std::string filename, MeshData& out_mesh);
+		static bool LoadTexture(std::string filename, Texture& out_texture);
 
 		const int LoadModels(std::string directory);
 		bool LoadScenes(std::string directory);

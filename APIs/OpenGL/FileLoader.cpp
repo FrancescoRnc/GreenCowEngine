@@ -1,9 +1,11 @@
 #include "FileLoader.h"
 #include <stdexcept>
+#include "../Helpers/AssetManager.h"
 
-bool OpenGL::FileLoader::LoadMesh(std::filesystem::path filepath, MeshData& out_mesh)
+bool OpenGL::FileLoader::LoadMesh(std::string filename, MeshData& out_mesh)
 {
-	std::cout << "Loading file at: " << filepath << std::endl;
+	Helpers::AssetContent* asset = Helpers::AssetManager::Get()->GetAsset(filename);
+	std::cout << "Loading file at: " << asset->Filepath() << std::endl;
 	bool success = false;
 
 	MeshData meshData{};
@@ -17,7 +19,7 @@ bool OpenGL::FileLoader::LoadMesh(std::filesystem::path filepath, MeshData& out_
 	std::vector<Vertex> vertices;
 
 	std::stringstream sline;
-	std::ifstream stream(filepath);
+	std::ifstream stream(asset->Filepath());
 	//std::stringstream ss;
 	std::string line = "";
 	std::string prefix = "";
@@ -117,13 +119,13 @@ bool OpenGL::FileLoader::LoadMesh(std::filesystem::path filepath, MeshData& out_
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
-		meshData = { filepath.stem().string(), vertices, indices_positions, vao, vbo, ebo };
+		meshData = { asset->Name(), vertices, indices_positions, vao, vbo, ebo};
 
 		success = true;
 	}
 	catch (const std::exception& ex)
 	{
-		std::cout << "Error: Something happened while loading Mesh at [" << filepath << "]: " << ex.what() << std::endl;
+		std::cout << "Error: Something happened while loading Mesh at [" << asset->Filepath() << "]: " << ex.what() << std::endl;
 	}
 
 	out_mesh = meshData;
@@ -131,16 +133,17 @@ bool OpenGL::FileLoader::LoadMesh(std::filesystem::path filepath, MeshData& out_
 	return success;
 }
 
-bool OpenGL::FileLoader::LoadTexture(std::string filepath, Texture& out_texture)
+bool OpenGL::FileLoader::LoadTexture(std::string filename, Texture& out_texture)
 {
 	bool success = false;
 	Texture tex;
 	GLuint texId;
 	int width, height, channels;
+	Helpers::AssetContent* asset = Helpers::AssetManager::Get()->GetAsset(filename);
 
 	try
 	{
-		auto image = stbi_load(filepath.c_str(), &width, &height, &channels, STBI_rgb);
+		auto image = stbi_load(asset->Filepath().string().c_str(), &width, &height, &channels, STBI_rgb);
 		glGenTextures(1, &texId);
 		glBindTexture(GL_TEXTURE_2D, texId);
 
@@ -157,7 +160,7 @@ bool OpenGL::FileLoader::LoadTexture(std::string filepath, Texture& out_texture)
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-		tex = { texId, image };
+		tex = Texture(texId/*, {static_cast<unsigned char*>(image)}*/);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		stbi_image_free(image);
@@ -167,7 +170,7 @@ bool OpenGL::FileLoader::LoadTexture(std::string filepath, Texture& out_texture)
 	}
 	catch (const std::exception& ex)
 	{
-		std::cout << "Error: Something happened while loading Texture at [" << filepath << "]: " << ex.what() << std::endl;
+		std::cout << "Error: Something happened while loading Texture at [" << asset->Filepath() << "]: " << ex.what() << std::endl;
 	}
 
 	return success;

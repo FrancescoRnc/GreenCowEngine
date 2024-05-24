@@ -78,10 +78,10 @@
     <ClCompile Include="APIs\OpenGL\Renderer.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\Helpers\AssetWrapper.cpp">
+    <ClCompile Include="APIs\Helpers\AssetLoader.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="APIs\Helpers\AssetsLoader.cpp">
+    <ClCompile Include="APIs\Helpers\AssetManager.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="APIs\Engine\GreenCowEngine.cpp">
@@ -167,10 +167,10 @@
     <ClInclude Include="APIs\OpenGL\Renderer.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\Helpers\AssetWrapper.h">
+    <ClInclude Include="APIs\Helpers\AssetLoader.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="APIs\Helpers\AssetsLoader.h">
+    <ClInclude Include="APIs\Helpers\AssetManager.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="APIs\OpenGL\DataArchivers\GameDataArchiver.h">

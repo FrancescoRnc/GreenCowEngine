@@ -7,12 +7,13 @@ namespace OpenGL
 	{
 	public:
 		Texture() {}
-		Texture(GLuint texId, unsigned char* source) 
-			: TextureID(texId), Source(source)
-		{}
+		Texture(GLuint texId) : TextureID(texId) {}
+		//Texture(GLuint texId, std::vector<unsigned char> source) 
+		//	: TextureID(texId), Source(source)
+		//{}
 
 		GLuint TextureID{ 0 };
-		unsigned char* Source{ nullptr };
+		//std::vector<unsigned char> Source{};
 
 		void Setup();
 		void Bind();

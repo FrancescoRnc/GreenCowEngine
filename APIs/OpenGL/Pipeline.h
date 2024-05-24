@@ -7,12 +7,11 @@ namespace OpenGL
 	{
 		ProgramMap _registeredPrograms{};
 		GLuint _defaultProgram{ 0 };
-		//class Camera* refCamera{ nullptr };
 		std::vector<class Mesh*> meshes{};
 		std::vector<struct MeshInstanceProfile> meshInstances{};
 
-	public:
 
+	public:
 		Pipeline() {}
 
 		COPY_MOVE_DELETE(Pipeline)
@@ -27,6 +26,15 @@ namespace OpenGL
 		GLuint GetProgram(const std::string name) const;
 		void UseDefaultProgram() const;
 		void UseProgram(GLuint program) const;
+
+
+	private:
+		//GLuint _getVertexShaderFromSource(std::string shaderFilename);
+		//GLuint _getFragmentShaderFromSource(std::string shaderFilename);
+		GLuint _getShaderFromSource(GLenum shaderType, std::string shaderFilename);
+		void _linkShadersToProgram(GLuint program, const std::vector<GLuint>& shaders);
+		void _detachShadersFromProgram(const GLuint program, const std::vector<GLuint>& shaders);
+		void _deleteShaders(const std::vector<GLuint>& shaders);
 	};
 
 	

@@ -9,6 +9,7 @@
 #include "FileLoader.h"
 #include "Scene.h"
 #include "../Helpers/FileReader.h"
+#include "DataArchivers/GameDataArchiver.h"
 
 
 
@@ -74,13 +75,31 @@ void OpenGL::OpenGL4Api::LoadFiles()
 	try
 	{
 		pipeline->CreateProgram("default", {
-			"Assets/Shaders/Mesh.vert",
-			"Assets/Shaders/Mesh.frag"
+			"Mesh.vert",
+			"Mesh.frag"
 		});
 		pipeline->CreateProgram("textured", {
-			"Assets/Shaders/Mesh.vert",
-			"Assets/Shaders/Textured.frag"
+			"Mesh.vert",
+			"Textured.frag"
 		}, true);
+
+
+		std::vector<Vertex> vertices;
+		std::vector<GLint> indices;
+		MeshData meshData;
+		Texture tex;
+
+
+		FileLoader::LoadMesh("Skull.obj", meshData);
+		FileLoader::LoadTexture("ground.jpg", tex);
+
+		GameDataArchiver::Get()->StoreMesh("skull", meshData);
+
+		GLuint defaultProgram = 1;
+
+		std::vector<GLuint> texs{ tex.TextureID };
+		Material mat = Material( GameDataArchiver::Get()->GetShader("default"), texs);
+		GameDataArchiver::Get()->StoreMaterial("skull", mat);
 	}
 	catch (const std::exception& ex) 
 	{

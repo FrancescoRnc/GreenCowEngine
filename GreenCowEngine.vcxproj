@@ -140,8 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="APIs\Engine\GreenCowEngine.cpp" />
-    <ClCompile Include="APIs\Helpers\AssetsLoader.cpp" />
-    <ClCompile Include="APIs\Helpers\AssetWrapper.cpp" />
+    <ClCompile Include="APIs\Helpers\AssetManager.cpp" />
+    <ClCompile Include="APIs\Helpers\AssetLoader.cpp" />
     <ClCompile Include="APIs\Helpers\FileReader.cpp" />
     <ClCompile Include="APIs\Engine\IGPUApi.cpp" />
     <ClCompile Include="APIs\OpenGL\OpenGL4Api.cpp" />
@@ -169,8 +169,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APIs\Engine\GreenCowEngine.h" />
-    <ClInclude Include="APIs\Helpers\AssetsLoader.h" />
-    <ClInclude Include="APIs\Helpers\AssetWrapper.h" />
+    <ClInclude Include="APIs\Helpers\AssetManager.h" />
+    <ClInclude Include="APIs\Helpers\AssetLoader.h" />
     <ClInclude Include="APIs\Helpers\FileReader.h" />
     <ClInclude Include="APIs\Engine\IGPUApi.h" />
     <ClInclude Include="APIs\OpenGL\OpenGL4Api.h" />
